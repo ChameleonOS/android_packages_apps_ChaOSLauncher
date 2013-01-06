@@ -21,15 +21,11 @@
     <!-- General -->
     <skip />
     <!-- Application name -->
-<<<<<<< HEAD
-    <string name="application_name" translatable="false">Trebuchet</string>
-=======
     <string name="application_name" translatable="false">ChaOSLauncher</string>
     <!-- Application copyright -->
     <string name="application_copyright">Copyright \u00A9 ChameleonOS 2013</string>
     <!-- Application version -->
     <string name="application_version">1.0</string>
->>>>>>> Refactor to ChameleonOS ChaOS Launcher
     <!-- Accessibility-facing application name -->
     <string name="home">Home</string>
     <!-- Name for all applications running as this uid. -->
@@ -158,16 +154,10 @@ s -->
     <string name="menu_notifications">Notifications</string>
     <!-- Noun, menu item used to show the system settings -->
     <string name="menu_settings">System settings</string>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
     <!-- Noun, menu item used to show the system settings -->
     <string name="menu_preview">Preview</string>
->>>>>>> Add launcher previews
     <!-- Noun, menu item used to show the launcher preferences -->
     <string name="menu_preferences">ChaOSLauncher settings</string>
->>>>>>> Refactor to ChameleonOS ChaOS Launcher
     <!-- Noun, menu item used to show help. [CHAR_LIMIT=none] -->
     <string name="menu_help">Help</string>
 
@@ -293,8 +283,6 @@ s -->
     <!-- Dummy string [CHAR_LIMIT=60] -->
     <string name="custom_workspace_cling_description_2"></string>
 
-<<<<<<< HEAD
-=======
     <!-- Hidden apps -->
     <string name="hidden_apps_title">Hidden Apps</string>
 
@@ -398,22 +386,4 @@ s -->
     <string name="preferences_interface_general_fullscreen_title">Fullscreen mode</string>
     <string name="preferences_interface_general_fullscreen_summary">Hide the status bar to extend the homescreen</string>
 
-    <!-- Koush steals yachts -->
-    <string-array name="preferences_koush">
-        <item>Koush steals yachts!!!!</item>
-        <item>Koush steals yachts!!!!</item>
-        <item>Koush steals yachts!!!!</item>
-        <item>Koush steals yachts!!!!</item>
-        <item>I hope you step on a LEGO!!!!</item>
-        <item>This setting is here \"because we can\"</item>
-        <item>Looks good to me, but someone else must approve</item>
-        <item>I would prefer that you didn\'t submit this</item>
-        <item>WHY ARE YOU UP AT 3AM!!!!</item>
-        <item>Do not submit</item>
-        <item>&lt;cdesai&gt; settings seem small</item>
-        <item>&lt;cdesai&gt; the size of preferences</item>
-        <item>&lt;nebkat&gt; what am I supposed to do?</item>
-        <item>&lt;nebkat&gt; fill the space with \"koush steals yachts\"?</item>
-    </string-array>
->>>>>>> Add folder icon styles.  Styles currently include stacked, grid, and carousel.
 </resources>
