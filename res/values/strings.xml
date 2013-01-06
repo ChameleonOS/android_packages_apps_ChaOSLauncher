@@ -386,4 +386,9 @@ s -->
     <string name="preferences_interface_general_fullscreen_title">Fullscreen mode</string>
     <string name="preferences_interface_general_fullscreen_summary">Hide the status bar to extend the homescreen</string>
 
+    <!-- Folder sort types -->
+    <string name="menu_folder_sort_none">None</string>
+    <string name="menu_folder_sort_ascending">Sort A->Z</string>
+    <string name="menu_folder_sort_descending">Sort Z->A</string>
+    <string name="menu_folder_sort_usage">Sort by usage</string>
 </resources>

@@ -1355,8 +1355,15 @@ public class LauncherModel extends BroadcastReceiver {
                             (LauncherSettings.Favorites.SPANX);
                     final int spanYIndex = c.getColumnIndexOrThrow(
                             LauncherSettings.Favorites.SPANY);
+<<<<<<< HEAD
                     final int receiverPackageIndex = c.getColumnIndexOrThrow(
                             LauncherSettings.Favorites.RECEIVER_COMPONENT);
+=======
+                    final int launchCountIndex = c.getColumnIndexOrThrow(
+                            LauncherSettings.Favorites.LAUNCH_COUNT);
+                    final int sortTypeIndex = c.getColumnIndexOrThrow(
+                            LauncherSettings.Favorites.SORT_TYPE);
+>>>>>>> Add per-folder sorting
 
                     ShortcutInfo info;
                     String intentDescription;
@@ -1425,6 +1432,7 @@ public class LauncherModel extends BroadcastReceiver {
                                     info.screen = c.getInt(screenIndex);
                                     info.cellX = c.getInt(cellXIndex);
                                     info.cellY = c.getInt(cellYIndex);
+                                    info.launchCount = c.getInt(launchCountIndex);
 
                                     // check & update map of what's occupied
                                     if (!checkItemPlacement(occupied, info)) {
@@ -1471,6 +1479,7 @@ public class LauncherModel extends BroadcastReceiver {
                                 folderInfo.screen = c.getInt(screenIndex);
                                 folderInfo.cellX = c.getInt(cellXIndex);
                                 folderInfo.cellY = c.getInt(cellYIndex);
+                                folderInfo.sortType = c.getInt(sortTypeIndex);
 
                                 if (folderInfo instanceof LiveFolderInfo) {
                                     LiveFolderInfo fInfo = (LiveFolderInfo) folderInfo;
