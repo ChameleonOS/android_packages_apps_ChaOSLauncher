@@ -528,16 +528,16 @@ public class FolderIcon extends LinearLayout implements FolderListener {
     private PreviewItemDrawingParams computePreviewItemDrawingParamsGrid(int index,
             PreviewItemDrawingParams params) {
         //index = mNumItemsInPreview - index - 1;
-        float iconScale = 0.50f;
-        float scaledSize = iconScale * mBaselineIconSize;
+        float iconScale = 0.5f;
 
         // We want to imagine our coordinates from the bottom left, growing up and to the
         // right. This is natural for the x-axis, but for the y-axis, we have to invert things.
-        float offsetScale = 0.6f;
+        float gridScale = 0.6f;
+        float scaledSize = gridScale * mBaselineIconSize;
         int cellX = index % (mNumItemsInPreview / 2);
         int cellY = index / (mNumItemsInPreview / 2);
-        float xOffset = (mAvailableSpaceInPreview - (offsetScale*mBaselineIconSize)) * cellX;
-        float yOffset = (mAvailableSpaceInPreview - (offsetScale*mBaselineIconSize)) * cellY;
+        float xOffset = (mAvailableSpaceInPreview - scaledSize) * cellX;
+        float yOffset = (mAvailableSpaceInPreview - scaledSize) * cellY;
         float transX = xOffset;
         float transY = yOffset;
         final int overlayAlpha = 0;
