@@ -528,7 +528,11 @@ public class FolderIcon extends LinearLayout implements FolderListener {
     private PreviewItemDrawingParams computePreviewItemDrawingParamsGrid(int index,
             PreviewItemDrawingParams params) {
         //index = mNumItemsInPreview - index - 1;
+<<<<<<< HEAD
         float iconScale = 0.5f;
+=======
+        float iconScale = 0.50f;
+>>>>>>> Add folder icon styles.  Styles currently include stacked, grid, and carousel.
         float scaledSize = iconScale * mBaselineIconSize;
 
         // We want to imagine our coordinates from the bottom left, growing up and to the
@@ -543,7 +547,11 @@ public class FolderIcon extends LinearLayout implements FolderListener {
         final int overlayAlpha = 0;
 
         if (params == null) {
+<<<<<<< HEAD
             params = new PreviewItemDrawingParams(transX, transY, totalScale, overlayAlpha);
+=======
+            params = new PreviewItemDrawingParams(transX, transY, iconScale, overlayAlpha);
+>>>>>>> Add folder icon styles.  Styles currently include stacked, grid, and carousel.
         } else {
             params.transX = transX;
             params.transY = transY;
