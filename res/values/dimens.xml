@@ -69,7 +69,7 @@
          external icon width/height above to compensate -->
     <dimen name="apps_customize_tab_bar_height">52dp</dimen>
     <dimen name="apps_customize_tab_bar_margin_top">0dp</dimen>
-    <dimen name="app_icon_size">48dp</dimen>
+    <dimen name="app_icon_size">54dp</dimen>
     <!-- The width can be 72dp because we don't have L/R padding -->
     <dimen name="apps_customize_cell_width">74dp</dimen>
     <dimen name="apps_customize_cell_height">82dp</dimen>
