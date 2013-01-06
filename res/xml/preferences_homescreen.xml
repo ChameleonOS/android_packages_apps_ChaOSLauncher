@@ -15,11 +15,11 @@
 -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:launcher="http://schemas.android.com/apk/res/com.cyanogenmod.trebuchet"
+    xmlns:launcher="http://schemas.android.com/apk/res/org.chameleonos.chaoslauncher"
     android:key="ui_homescreen"
     android:title="@string/preferences_interface_homescreen_title">
     <PreferenceCategory android:title="@string/preferences_interface_homescreen_general_category">
-        <com.cyanogenmod.trebuchet.preference.DoubleNumberPickerPreference android:key="ui_homescreen_grid"
+        <org.chameleonos.chaoslauncher.preference.DoubleNumberPickerPreference android:key="ui_homescreen_grid"
             android:title="@string/preferences_interface_homescreen_general_grid_title"
             android:summary="@string/preferences_interface_homescreen_general_grid_summary"
             launcher:pickerTitle1="@string/preferences_interface_homescreen_general_grid_rows_title"
@@ -30,13 +30,13 @@
             launcher:min1="3"
             launcher:max2="7"
             launcher:min2="3" />
-        <com.cyanogenmod.trebuchet.preference.NumberPickerPreference android:key="ui_homescreen_screens"
+        <org.chameleonos.chaoslauncher.preference.NumberPickerPreference android:key="ui_homescreen_screens"
             android:title="@string/preferences_interface_homescreen_general_screens_title"
             android:summary="@string/preferences_interface_homescreen_general_screens_summary"
             android:defaultValue="5"
             launcher:max="7"
             launcher:min="1" />
-        <com.cyanogenmod.trebuchet.preference.NumberPickerPreference android:key="ui_homescreen_default_screen"
+        <org.chameleonos.chaoslauncher.preference.NumberPickerPreference android:key="ui_homescreen_default_screen"
             android:title="@string/preferences_interface_homescreen_general_default_screen_title"
             android:summary="@string/preferences_interface_homescreen_general_default_screen_summary"
             android:defaultValue="3"
@@ -69,7 +69,7 @@
             android:title="@string/preferences_interface_homescreen_scrolling_wallpaper_hack_title"
             android:summary="@string/preferences_interface_homescreen_scrolling_wallpaper_hack_summary"
             android:defaultValue="@bool/config_workspaceDefaultWallpaperHack" />
-        <com.cyanogenmod.trebuchet.preference.NumberPickerPreference android:key="ui_homescreen_scrolling_wallpaper_size"
+        <org.chameleonos.chaoslauncher.preference.NumberPickerPreference android:key="ui_homescreen_scrolling_wallpaper_size"
             android:title="@string/preferences_interface_homescreen_scrolling_wallpaper_size_title"
             android:summary="@string/preferences_interface_homescreen_scrolling_wallpaper_size_summary"
             android:defaultValue="2"

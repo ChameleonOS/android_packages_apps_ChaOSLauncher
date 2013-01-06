@@ -14,9 +14,9 @@
      limitations under the License.
 -->
 
-<com.cyanogenmod.trebuchet.PagedViewIcon
+<org.chameleonos.chaoslauncher.PagedViewIcon
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:launcher="http://schemas.android.com/apk/res/com.cyanogenmod.trebuchet"
+    xmlns:launcher="http://schemas.android.com/apk/res/org.chameleonos.chaoslauncher"
 
     style="@style/WorkspaceIcon.Portrait.AppsCustomize"
 

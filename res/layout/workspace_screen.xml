@@ -14,9 +14,9 @@
      limitations under the License.
 -->
 
-<com.cyanogenmod.trebuchet.CellLayout
+<org.chameleonos.chaoslauncher.CellLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:launcher="http://schemas.android.com/apk/res/com.cyanogenmod.trebuchet"
+    xmlns:launcher="http://schemas.android.com/apk/res/org.chameleonos.chaoslauncher"
 
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
