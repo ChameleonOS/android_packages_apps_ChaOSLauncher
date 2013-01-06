@@ -97,4 +97,13 @@
             android:defaultValue="0"
             android:dependency="ui_homescreen_indicator_enable" />
     </PreferenceCategory>
+    <PreferenceCategory android:title="@string/preferences_interface_homescreen_folder_style_category">
+        <org.chameleonos.chaoslauncher.preference.ImageListPreference android:key="ui_homescreen_folder_style"
+            android:title="@string/preferences_interface_homescreen_folder_style_title"
+            android:summary="@string/preferences_interface_homescreen_folder_style_summary"
+            android:entries="@array/folder_icon_style_names"
+            android:entryValues="@array/folder_icon_style_values"
+            launcher:entryImages="@array/folder_icon_style_icons"
+            android:defaultValue="0" />
+    </PreferenceCategory>
 </PreferenceScreen>

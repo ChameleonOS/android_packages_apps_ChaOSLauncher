@@ -196,4 +196,8 @@
         <attr name="entries" format="reference" />
     </declare-styleable>
     <attr name="customAbsSpinnerStyle" format="reference" />
+
+    <declare-styleable name="ImageListPreference">
+        <attr name="entryImages" format="reference" />
+    </declare-styleable>
 </resources>
