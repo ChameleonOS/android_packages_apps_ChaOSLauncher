@@ -142,6 +142,12 @@ public final class PreferencesProvider {
                     return Integer.parseInt(getString("ui_homescreen_indicator_position", "0"));
                 }
             }
+
+            public static class FolderIconStyle {
+                public static int getFolderIconStyle(Context context) {
+                    return Integer.parseInt(getString("ui_homescreen_folder_style", "0"));
+                }
+            }
         }
 
         public static class Drawer {
