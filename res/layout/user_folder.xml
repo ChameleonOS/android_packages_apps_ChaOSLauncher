@@ -14,15 +14,15 @@
      limitations under the License.
 -->
 
-<com.cyanogenmod.trebuchet.Folder
+<org.chameleonos.chaoslauncher.Folder
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:launcher="http://schemas.android.com/apk/res/com.cyanogenmod.trebuchet"
+    xmlns:launcher="http://schemas.android.com/apk/res/org.chameleonos.chaoslauncher"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/portal_container_holo">
 
-    <com.cyanogenmod.trebuchet.CellLayout
+    <org.chameleonos.chaoslauncher.CellLayout
         android:id="@+id/folder_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
         android:gravity="center_horizontal"
         android:singleLine="true" />
 
-    <com.cyanogenmod.trebuchet.FolderEditText
+    <org.chameleonos.chaoslauncher.FolderEditText
         android:id="@+id/folder_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -67,4 +67,4 @@
         android:gravity="center_horizontal"
         android:singleLine="true"
         android:imeOptions="flagNoExtractUi"/>
-</com.cyanogenmod.trebuchet.Folder>
+</org.chameleonos.chaoslauncher.Folder>

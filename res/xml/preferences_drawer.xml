@@ -15,7 +15,7 @@
 -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:launcher="http://schemas.android.com/apk/res/com.cyanogenmod.trebuchet"
+    xmlns:launcher="http://schemas.android.com/apk/res/org.chameleonos.chaoslauncher"
     android:key="ui_drawer"
     android:title="@string/preferences_interface_drawer_title">
     <ListPreference android:key="ui_drawer_orientation"
@@ -29,8 +29,8 @@
             android:title="@string/preferences_interface_drawer_hidden_apps_title"
             android:summary="@string/preferences_interface_drawer_hidden_apps_summary">
             <intent
-                android:targetPackage="com.cyanogenmod.trebuchet"
-                android:targetClass="com.cyanogenmod.trebuchet.preference.HiddenAppsActivity"/>
+                android:targetPackage="org.chameleonos.chaoslauncher"
+                android:targetClass="org.chameleonos.chaoslauncher.preference.HiddenAppsActivity"/>
         </Preference>
         <CheckBoxPreference android:key="ui_drawer_remove_hidden_apps_shortcuts"
             android:title="@string/preferences_interface_drawer_hidden_apps_shortcuts_title"

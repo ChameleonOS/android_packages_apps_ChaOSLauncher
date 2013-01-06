@@ -13,8 +13,8 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<com.cyanogenmod.trebuchet.Hotseat
+<org.chameleonos.chaoslauncher.Hotseat
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:launcher="http://schemas.android.com/apk/res/com.cyanogenmod.trebuchet"
+    xmlns:launcher="http://schemas.android.com/apk/res/org.chameleonos.chaoslauncher.trebuchet"
     launcher:pageSpacing="@dimen/workspace_page_spacing"
     launcher:cellCount="@integer/hotseat_cell_count" />

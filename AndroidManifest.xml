@@ -19,7 +19,7 @@
 -->
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cyanogenmod.trebuchet"
+    package="org.chameleonos.chaoslauncher"
     android:versionName="@string/application_version">
 
     <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="17" />
@@ -53,7 +53,7 @@
         android:label="@string/permlab_write_settings"
         android:description="@string/permdesc_write_settings" />
     <permission
-        android:name="com.cyanogenmod.trebuchet.permission.MANAGE_LIVE_FOLDERS"
+        android:name="org.chameleonos.chaoslauncher.trebuchet.permission.MANAGE_LIVE_FOLDERS"
         android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
         android:protectionLevel="system|signature" />
 
@@ -69,14 +69,14 @@
     <uses-permission android:name="com.cyanogenmod.trebuchet.permission.MANAGE_LIVE_FOLDERS"/>
 
     <application
-        android:name="com.cyanogenmod.trebuchet.LauncherApplication"
+        android:name="org.chameleonos.chaoslauncher.LauncherApplication"
         android:label="@string/application_name"
         android:icon="@mipmap/ic_launcher_home"
         android:hardwareAccelerated="true"
         android:largeHeap="@bool/config_largeHeap"
         android:supportsRtl="true">
         <activity
-            android:name="com.cyanogenmod.trebuchet.Launcher"
+            android:name="org.chameleonos.chaoslauncher.Launcher"
             android:launchMode="singleTask"
             android:clearTaskOnLaunch="true"
             android:stateNotNeeded="true"
@@ -91,7 +91,7 @@
         </activity>
 
         <activity
-            android:name="com.cyanogenmod.trebuchet.WallpaperChooser"
+            android:name="org.chameleonos.chaoslauncher.WallpaperChooser"
             android:theme="@style/Theme.WallpaperPicker"
             android:label="@string/pick_wallpaper"
             android:icon="@mipmap/ic_launcher_wallpaper"
@@ -107,7 +107,7 @@
 
         <!-- Intent received used to prepopulate the default workspace. -->
         <receiver
-            android:name="com.cyanogenmod.trebuchet.PreloadReceiver"
+            android:name="org.chameleonos.chaoslauncher.PreloadReceiver"
             android:permission="com.android.launcher.permission.PRELOAD_WORKSPACE">
             <intent-filter>
                 <action android:name="com.android.launcher.action.PRELOAD_WORKSPACE" />
@@ -115,13 +115,13 @@
         </receiver>
 
         <receiver
-            android:name="com.cyanogenmod.trebuchet.LiveFoldersReceiver">
+            android:name="org.chameleonos.chaoslauncher.LiveFoldersReceiver">
             <intent-filter>
                 <action android:name="cyanogenmod.intent.action.UPDATE_LIVE_FOLDER" />
             </intent-filter>
         </receiver>
 
-        <activity android:name="com.cyanogenmod.trebuchet.preference.Preferences"
+        <activity android:name="org.chameleonos.chaoslauncher.preference.Preferences"
             android:label="@string/preferences_title">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -129,12 +129,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.cyanogenmod.trebuchet.preference.HiddenAppsActivity"
+        <activity android:name="org.chameleonos.chaoslauncher.preference.HiddenAppsActivity"
             android:label="@string/hidden_apps_title" />
 
         <!-- Intent received used to install shortcuts from other applications -->
         <receiver
-            android:name="com.cyanogenmod.trebuchet.InstallShortcutReceiver"
+            android:name="org.chameleonos.chaoslauncher.InstallShortcutReceiver"
             android:permission="com.android.launcher.permission.INSTALL_SHORTCUT">
             <intent-filter>
                 <action android:name="com.android.launcher.action.INSTALL_SHORTCUT" />
@@ -143,7 +143,7 @@
 
         <!-- Intent received used to uninstall shortcuts from other applications -->
         <receiver
-            android:name="com.cyanogenmod.trebuchet.UninstallShortcutReceiver"
+            android:name="org.chameleonos.chaoslauncher.UninstallShortcutReceiver"
             android:permission="com.android.launcher.permission.UNINSTALL_SHORTCUT">
             <intent-filter>
                 <action android:name="com.android.launcher.action.UNINSTALL_SHORTCUT" />
@@ -152,14 +152,14 @@
 
         <!-- New user initialization; set up initial wallpaper -->
         <receiver
-            android:name="com.cyanogenmod.trebuchet.UserInitializeReceiver"
+            android:name="org.chameleonos.chaoslauncher.UserInitializeReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.USER_INITIALIZE" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name="com.cyanogenmod.trebuchet.PackageChangedReceiver" >
+        <receiver android:name=".PackageChangedReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_CHANGED"/>
                 <action android:name="android.intent.action.PACKAGE_REPLACED"/>
@@ -170,8 +170,8 @@
 
         <!-- The settings provider contains Home's data, like the workspace favorites -->
         <provider
-            android:name="com.cyanogenmod.trebuchet.LauncherProvider"
-            android:authorities="com.cyanogenmod.trebuchet.settings"
+            android:name="org.chameleonos.chaoslauncher.LauncherProvider"
+            android:authorities="org.chameleonos.chaoslauncher.settings"
             android:writePermission="com.android.launcher.permission.WRITE_SETTINGS"
             android:exported="true"
             android:readPermission="com.android.launcher.permission.READ_SETTINGS" />

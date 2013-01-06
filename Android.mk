@@ -24,7 +24,7 @@ LOCAL_STATIC_JAVA_LIBRARIES += org.cyanogenmod.support
 
 LOCAL_SRC_FILES := $(call all-java-files-under, src) $(call all-renderscript-files-under, src)
 
-LOCAL_PACKAGE_NAME := Trebuchet
+LOCAL_PACKAGE_NAME := ChaOSLauncher
 LOCAL_CERTIFICATE := shared
 
 LOCAL_OVERRIDES_PACKAGES := Home Launcher2
