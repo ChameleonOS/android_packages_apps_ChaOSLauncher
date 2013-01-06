@@ -159,7 +159,12 @@ s -->
     <!-- Noun, menu item used to show the system settings -->
     <string name="menu_settings">System settings</string>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+    <!-- Noun, menu item used to show the system settings -->
+    <string name="menu_preview">Preview</string>
+>>>>>>> Add launcher previews
     <!-- Noun, menu item used to show the launcher preferences -->
     <string name="menu_preferences">ChaOSLauncher settings</string>
 >>>>>>> Refactor to ChameleonOS ChaOS Launcher

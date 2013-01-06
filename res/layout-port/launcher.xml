@@ -30,7 +30,7 @@
         android:fitsSystemWindows="true">
 
         <!-- The workspace contains 5 screens of cells -->
-        <com.cyanogenmod.trebuchet.Workspace
+        <org.chameleonos.chaoslauncher.Workspace
             android:id="@+id/workspace"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -113,6 +113,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="invisible" />
+
+        <include  layout="@layout/preview_layout"
+            android:id="@+id/preview_pane"
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </org.chameleonos.chaoslauncher.DragLayer>
 </FrameLayout>
