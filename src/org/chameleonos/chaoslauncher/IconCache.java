@@ -17,6 +17,7 @@
 package org.chameleonos.chaoslauncher;
 
 import android.app.ActivityManager;
+import android.app.ThemeHelper;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -80,22 +81,24 @@ public class IconCache {
     }
 
     public Drawable getFullResIcon(String packageName, int iconId) {
-        Resources resources;
-        try {
-            resources = mPackageManager.getResourcesForApplication(packageName);
+        ActivityInfo info = null;
+        try{
+            info = mPackageManager.getActivityInfo(new ComponentName(packageName, packageName), 0);
         } catch (PackageManager.NameNotFoundException e) {
-            resources = null;
+            info = null;
         }
-        if (resources != null) {
-            if (iconId != 0) {
-                return getFullResIcon(resources, iconId);
-            }
+        if (info != null) {
+            return getFullResIcon(info);
         }
         return getFullResDefaultActivityIcon();
     }
 
     public Drawable getFullResIcon(ResolveInfo info) {
         return getFullResIcon(info.activityInfo);
+    }
+
+    public Drawable getFullResIcon(ResolveInfo info, String className) {
+        return getFullResIcon(info.activityInfo, className);
     }
 
     public Drawable getFullResIcon(ActivityInfo info) {
@@ -110,7 +113,31 @@ public class IconCache {
         if (resources != null) {
             int iconId = info.getIconResource();
             if (iconId != 0) {
-                return getFullResIcon(resources, iconId);
+                Drawable dr = ThemeHelper.getDrawable(mPackageManager, info.packageName, iconId, info.applicationInfo, info.targetActivity);
+                if (dr == null)
+                    dr = getFullResIcon(resources, iconId);
+                return dr;
+            }
+        }
+        return getFullResDefaultActivityIcon();
+    }
+
+    public Drawable getFullResIcon(ActivityInfo info, String className) {
+
+        Resources resources;
+        try {
+            resources = mPackageManager.getResourcesForApplication(
+                    info.applicationInfo);
+        } catch (PackageManager.NameNotFoundException e) {
+            resources = null;
+        }
+        if (resources != null) {
+            int iconId = info.getIconResource();
+            if (iconId != 0) {
+                Drawable dr = ThemeHelper.getDrawable(mPackageManager, info.packageName, iconId, info.applicationInfo, className);
+                if (dr == null)
+                    dr = getFullResIcon(resources, iconId);
+                return dr;
             }
         }
         return getFullResDefaultActivityIcon();
@@ -215,7 +242,7 @@ public class IconCache {
             }
 
             entry.icon = Utilities.createIconBitmap(
-                    getFullResIcon(info), mContext);
+                    getFullResIcon(info, componentName.getClassName()), mContext);
         }
         return entry;
     }
