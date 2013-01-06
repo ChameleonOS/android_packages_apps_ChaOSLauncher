@@ -159,6 +159,8 @@ s -->
     <string name="menu_notifications">Notifications</string>
     <!-- Noun, menu item used to show the system settings -->
     <string name="menu_settings">System settings</string>
+    <!-- Noun, menu item used to show the system settings -->
+    <string name="menu_preview">Preview</string>
     <!-- Noun, menu item used to show the launcher preferences -->
     <string name="menu_preferences">ChaOSLauncher settings</string>
     <!-- Noun, menu item used to show help. [CHAR_LIMIT=none] -->

@@ -68,7 +68,13 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
+
+import org.metalev.multitouch.controller.MultiTouchController;
+import org.metalev.multitouch.controller.MultiTouchController.MultiTouchObjectCanvas;
+import org.metalev.multitouch.controller.MultiTouchController.PointInfo;
+import org.metalev.multitouch.controller.MultiTouchController.PositionAndScale;
 
 /**
  * The workspace is a wide area with a wallpaper and a finite number of pages.
@@ -77,8 +83,9 @@ import java.util.Set;
  */
 public class Workspace extends PagedView
         implements DropTarget, DragSource, DragScroller, View.OnTouchListener,
-        DragController.DragListener, LauncherTransitionable, ViewGroup.OnHierarchyChangeListener {
-    private static final String TAG = "ChaOSLauncher.Workspace";
+        DragController.DragListener, LauncherTransitionable, ViewGroup.OnHierarchyChangeListener,
+        MultiTouchObjectCanvas<Object> {
+    private static final String TAG = "Launcher.Workspace";
 
     // Y rotation to apply to the workspace screens
     private static final float WORKSPACE_ROTATION = 12.5f;
@@ -94,6 +101,10 @@ public class Workspace extends PagedView
 
     // Pivot point for rotate anim
     private float mRotatePivotPoint = -1;
+    private static final int MAX_HOMESCREENS = 9;
+
+    private static final double ZOOM_SENSITIVITY = 1.6;
+    private static final double ZOOM_LOG_BASE_INV = 1.0 / Math.log(2.0 / ZOOM_SENSITIVITY);
 
     // These animators are used to fade the children's outlines
     private ObjectAnimator mChildrenOutlineFadeInAnimation;
@@ -315,6 +326,8 @@ public class Workspace extends PagedView
     private static final int SCROLLING_INDICATOR_TOP = 1;
     private static final int SCROLLING_INDICATOR_BOTTOM = 2;
 
+    private MultiTouchController<Object> mMultiTouchController;
+
     /**
      * Used to inflate the Workspace from XML.
      *
@@ -504,6 +517,7 @@ public class Workspace extends PagedView
         mIconCache = app.getIconCache();
         setWillNotDraw(false);
         setChildrenDrawnWithCacheEnabled(true);
+        mMultiTouchController = new MultiTouchController(this, false);
 
         final Resources res = getResources();
 
@@ -801,6 +815,8 @@ public class Workspace extends PagedView
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (mMultiTouchController.onTouchEvent(ev))
+            return false;
         switch (ev.getAction() & MotionEvent.ACTION_MASK) {
         case MotionEvent.ACTION_DOWN:
             mXDown = ev.getX();
@@ -2065,22 +2081,22 @@ public class Workspace extends PagedView
     private void initAnimationArrays() {
         final int childCount = getChildCount();
         if (mOldTranslationXs != null) return;
-        mOldTranslationXs = new float[childCount];
-        mOldTranslationYs = new float[childCount];
-        mOldScaleXs = new float[childCount];
-        mOldScaleYs = new float[childCount];
-        mOldBackgroundAlphas = new float[childCount];
-        mOldAlphas = new float[childCount];
-        mOldRotations = new float[childCount];
-        mOldRotationYs = new float[childCount];
-        mNewTranslationXs = new float[childCount];
-        mNewTranslationYs = new float[childCount];
-        mNewScaleXs = new float[childCount];
-        mNewScaleYs = new float[childCount];
-        mNewBackgroundAlphas = new float[childCount];
-        mNewAlphas = new float[childCount];
-        mNewRotations = new float[childCount];
-        mNewRotationYs = new float[childCount];
+        mOldTranslationXs = new float[MAX_HOMESCREENS];
+        mOldTranslationYs = new float[MAX_HOMESCREENS];
+        mOldScaleXs = new float[MAX_HOMESCREENS];
+        mOldScaleYs = new float[MAX_HOMESCREENS];
+        mOldBackgroundAlphas = new float[MAX_HOMESCREENS];
+        mOldAlphas = new float[MAX_HOMESCREENS];
+        mOldRotations = new float[MAX_HOMESCREENS];
+        mOldRotationYs = new float[MAX_HOMESCREENS];
+        mNewTranslationXs = new float[MAX_HOMESCREENS];
+        mNewTranslationYs = new float[MAX_HOMESCREENS];
+        mNewScaleXs = new float[MAX_HOMESCREENS];
+        mNewScaleYs = new float[MAX_HOMESCREENS];
+        mNewBackgroundAlphas = new float[MAX_HOMESCREENS];
+        mNewAlphas = new float[MAX_HOMESCREENS];
+        mNewRotations = new float[MAX_HOMESCREENS];
+        mNewRotationYs = new float[MAX_HOMESCREENS];
     }
 
     Animator getChangeStateAnimation(final State state, boolean animated) {
@@ -2289,7 +2305,10 @@ public class Workspace extends PagedView
                     cl.setScaleX(mNewScaleXs[i]);
                     cl.setScaleY(mNewScaleYs[i]);
                     cl.setBackgroundAlpha(mNewBackgroundAlphas[i]);
-                    cl.setShortcutAndWidgetAlpha(mNewAlphas[i]);
+                    // because previews need the workspaces to be visible and opaque
+					// we won't adjust their alpha if Launcher.mState is State.PREVIEW
+					if (mLauncher.mState != Launcher.State.PREVIEW)
+						cl.setShortcutAndWidgetAlpha(mNewAlphas[i]);
                     cl.setRotation(mNewRotations[i]);
                     cl.setRotationY(mNewRotationYs[i]);
                 } else {
@@ -4412,5 +4431,165 @@ public class Workspace extends PagedView
         if (qsbDivider != null && mShowSearchBar) qsbDivider.setAlpha(reducedFade);
         if (dockDivider != null && mShowDockDivider) dockDivider.setAlpha(reducedFade);
         if (scrollIndicator != null && mShowScrollingIndicator) scrollIndicator.setAlpha(1 - fade);
+    }
+
+    @Override
+    public Object getDraggableObjectAtPoint(PointInfo touchPoint) {
+        return this;
+    }
+
+    @Override
+    public void getPositionAndScale(Object obj, PositionAndScale objPosAndScaleOut) {
+        objPosAndScaleOut.set(0.0f, 0.0f, true, 1.0f, false, 0.0f, 0.0f, false, 0.0f);
+    }
+
+    @Override
+    public boolean setPositionAndScale(Object obj, PositionAndScale newObjPosAndScale, PointInfo touchPoint) {
+        double pinch = Math.round(Math.log(newObjPosAndScale.getScale()) * ZOOM_LOG_BASE_INV);
+        if (pinch < 0 &&
+                mLauncher.mState == Launcher.State.WORKSPACE) {
+            disableScrollingIndicator();
+            mLauncher.showPreviewLayout(true);
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public void selectObject(Object obj, PointInfo touchPoint) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public int getDefaultHomescreen() {
+        return mDefaultHomescreen;
+    }
+
+    void setDefaultScreenTo(int index) {
+        if (index <= getChildCount() - 1) {
+            mDefaultHomescreen = index;
+            //Launcher.setScreen(index);
+        }
+    }
+
+    public void addScreen(int index) {
+        if (index <= getChildCount()) {
+            LayoutInflater inflater = (LayoutInflater)getContext()
+            .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            CellLayout screen = (CellLayout)inflater.inflate(R.layout.workspace_screen, null);
+            if (mStretchScreens) {
+                screen.setCellGaps(-1, -1);
+            }
+            addView(screen, index);
+            mNumberHomescreens++;
+        }
+    }
+
+    public void moveScreen(int from, int to) {
+        ViewGroup cl = (ViewGroup)getChildAt(from);
+        removeViewAt(from);
+        addView(cl, to);
+        if (from > to) {
+            if (mDefaultHomescreen >= to && mDefaultHomescreen <= from)
+                if (mDefaultHomescreen == from)
+                    mDefaultHomescreen = to;
+                else
+                    mDefaultHomescreen++;
+            if (mCurrentPage >= to && mCurrentPage <= from)
+                if (mCurrentPage == from)
+                    mCurrentPage = to;
+                else
+                    mCurrentPage++;
+        } else {
+            if (mDefaultHomescreen >= from && mDefaultHomescreen <= to)
+                if (mDefaultHomescreen == from)
+                    mDefaultHomescreen = to;
+                else
+                    mDefaultHomescreen--;
+            if (mCurrentPage >= from && mCurrentPage <= to)
+                if (mCurrentPage == from)
+                    mCurrentPage = to;
+                else
+                    mCurrentPage--;
+        }
+
+        updateScreenIndexForItemsInOtherScreens(from, to);
+        // store the defualt homescreen in case it changed position
+        PreferencesProvider.Interface.Homescreen.setDefaultHomescreen(getContext(), mDefaultHomescreen + 1);
+        // in case the current page moved during this, reposition to the new current
+        setCurrentPage(mCurrentPage);
+    }
+
+    public void removeScreen(int index) {
+        if (index < getChildCount()) {
+            if (getChildCount() <= 2)
+                return;
+            ViewGroup cl = (ViewGroup)getChildAt(index);
+            if (((cl instanceof CellLayout)) && (((CellLayout)cl).getShortcutsAndWidgets().getChildCount() == 0)) {
+                removeViewAt(index);
+                resetDefaultHomeScreen(index);
+                resetCurrentScreen(index);
+                updateScreenIndexForItemsInOtherScreens(index);
+            }
+        }
+    }
+
+    private void resetDefaultHomeScreen(int index)
+    {
+        if (index < mDefaultHomescreen)
+            mDefaultHomescreen--;
+        if (mDefaultHomescreen >= getPageCount()) {
+            if (getPageCount() <= 0)
+                mDefaultHomescreen = 0;
+            else
+                mDefaultHomescreen = getPageCount() - 1;
+        }
+        PreferencesProvider.Interface.Homescreen.setDefaultHomescreen(mLauncher, mDefaultHomescreen);
+    }
+
+    private void resetCurrentScreen(int index) {
+        if (index < mCurrentPage)
+            mCurrentPage--;
+        if (mCurrentPage >= getPageCount())
+            if (getPageCount() <= 0)
+                mCurrentPage = 0;
+            else
+                mCurrentPage = getPageCount() - 1;
+    }
+
+    private void updateScreenIndexForItemsInOtherScreens(int index) {
+        Iterator localIterator = LauncherModel.sBgItemsIdMap.entrySet().iterator();
+        while (localIterator.hasNext()) {
+            ItemInfo itemInfo = (ItemInfo)((Map.Entry)localIterator.next()).getValue();
+            if ((itemInfo.container == LauncherSettings.Favorites.CONTAINER_DESKTOP)
+                    && (itemInfo.screen > index))
+                LauncherModel.moveItemInDatabase(mLauncher, itemInfo, itemInfo.container,
+                        itemInfo.screen - 1, itemInfo.cellX, itemInfo.cellY);
+        }
+    }
+
+    private void updateScreenIndexForItemsInOtherScreens(int from, int to) {
+        Iterator localIterator = LauncherModel.sBgItemsIdMap.entrySet().iterator();
+        while (localIterator.hasNext()) {
+            ItemInfo itemInfo = (ItemInfo)((Map.Entry)localIterator.next()).getValue();
+            if (itemInfo.container == LauncherSettings.Favorites.CONTAINER_DESKTOP) {
+                if (from < to && (itemInfo.screen >= from && itemInfo.screen <= to)) {
+                    if (itemInfo.screen == from)
+                        LauncherModel.moveItemInDatabase(mLauncher, itemInfo, itemInfo.container,
+                                to, itemInfo.cellX, itemInfo.cellY);
+                    else
+                        LauncherModel.moveItemInDatabase(mLauncher, itemInfo, itemInfo.container,
+                                itemInfo.screen - 1, itemInfo.cellX, itemInfo.cellY);
+                } else if(itemInfo.screen >= to && itemInfo.screen <= from) {
+                    if (itemInfo.screen == from)
+                        LauncherModel.moveItemInDatabase(mLauncher, itemInfo, itemInfo.container,
+                                to, itemInfo.cellX, itemInfo.cellY);
+                    else
+                        LauncherModel.moveItemInDatabase(mLauncher, itemInfo, itemInfo.container,
+                                itemInfo.screen + 1, itemInfo.cellX, itemInfo.cellY);
+                }
+            }
+        }
     }
 }
