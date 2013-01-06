@@ -31,7 +31,8 @@ import java.util.Arrays;
 class ItemInfo {
 
     static final int NO_ID = -1;
-
+    static final int SORT_NONE = 0;
+    
     /**
      * The id in the settings database for this item
      */
@@ -46,7 +47,17 @@ class ItemInfo {
     int itemType;
 
     /**
-     * The id of the container that holds this item. For the desktop, this will be
+     * tracks # of times item is launched
+     */
+    int launchCount;
+
+    /**
+     * indicates how to sort items if this is a folder
+     */
+    int sortType = SORT_NONE;
+
+    /**
+     * The id of the container that holds this item. For the desktop, this will be 
      * {@link LauncherSettings.Favorites#CONTAINER_DESKTOP}. For the all applications folder it
      * will be {@link #NO_ID} (since it is not stored in the settings DB). For user folders
      * it will be the id of the folder.
@@ -115,6 +126,8 @@ class ItemInfo {
         screen = info.screen;
         itemType = info.itemType;
         container = info.container;
+        launchCount = info.launchCount;
+        sortType = info.sortType;
         // tempdebug:
         LauncherModel.checkItemInfo(this);
     }
@@ -147,6 +160,8 @@ class ItemInfo {
         values.put(LauncherSettings.Favorites.CELLY, cellY);
         values.put(LauncherSettings.Favorites.SPANX, spanX);
         values.put(LauncherSettings.Favorites.SPANY, spanY);
+        values.put(LauncherSettings.Favorites.LAUNCH_COUNT, launchCount);
+        values.put(LauncherSettings.Favorites.SORT_TYPE, sortType);
     }
 
     void updateValuesWithCoordinates(ContentValues values, int cellX, int cellY) {

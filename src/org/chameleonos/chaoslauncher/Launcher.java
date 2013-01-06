@@ -2009,6 +2009,11 @@ public final class Launcher extends Activity
 
                 boolean success = startActivitySafely(v, intent, tag);
 
+	            if (success) {
+    	            ((ItemInfo)tag).launchCount++;
+        	        LauncherModel.updateItemInDatabase(this, (ItemInfo)tag);
+            	}
+
                 if (success && v instanceof BubbleTextView) {
                     mWaitingForResume = (BubbleTextView) v;
                     mWaitingForResume.setStayPressed(true);

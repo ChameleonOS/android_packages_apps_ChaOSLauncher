@@ -61,7 +61,7 @@ public class LauncherProvider extends ContentProvider {
 
     private static final String DATABASE_NAME = "launcher.db";
 
-    private static final int DATABASE_VERSION = 14;
+    private static final int DATABASE_VERSION = 15;
 
     static final String AUTHORITY = "org.chameleonos.chaoslauncher.settings";
 
@@ -283,7 +283,9 @@ public class LauncherProvider extends ContentProvider {
                     "iconType INTEGER," +
                     "iconPackage TEXT," +
                     "iconResource TEXT," +
-                    "icon BLOB" +
+                    "icon BLOB," +
+                    "launchCount INTEGER," +
+                    "sortType INTEGER" +
                     ");");
 
             // Database was just created, so wipe any previous widgets
@@ -350,6 +352,8 @@ public class LauncherProvider extends ContentProvider {
             final int screenIndex = c.getColumnIndexOrThrow(LauncherSettings.Favorites.SCREEN);
             final int cellXIndex = c.getColumnIndexOrThrow(LauncherSettings.Favorites.CELLX);
             final int cellYIndex = c.getColumnIndexOrThrow(LauncherSettings.Favorites.CELLY);
+            final int launchCountIndex = c.getColumnIndexOrThrow(LauncherSettings.Favorites.LAUNCH_COUNT);
+            final int sortTypeIndex = c.getColumnIndexOrThrow(LauncherSettings.Favorites.SORT_TYPE);
 
             ContentValues[] rows = new ContentValues[c.getCount()];
             int i = 0;
@@ -368,6 +372,8 @@ public class LauncherProvider extends ContentProvider {
                 values.put(LauncherSettings.Favorites.SCREEN, c.getInt(screenIndex));
                 values.put(LauncherSettings.Favorites.CELLX, c.getInt(cellXIndex));
                 values.put(LauncherSettings.Favorites.CELLY, c.getInt(cellYIndex));
+                values.put(LauncherSettings.Favorites.LAUNCH_COUNT, c.getInt(launchCountIndex));
+                values.put(LauncherSettings.Favorites.SORT_TYPE, c.getInt(sortTypeIndex));
                 rows[i++] = values;
             }
 
@@ -420,6 +426,25 @@ public class LauncherProvider extends ContentProvider {
                 // Add default hotseat icons
                 loadFavorites(db, R.xml.update_workspace);
                 version = 14;
+            }
+
+            if (version < 15) {
+                // upgrade 14 -> 15 added launchCount and sortType columns
+                db.beginTransaction();
+                try {
+                    // Insert new column for holding launchCount
+                    db.execSQL("ALTER TABLE favorites " +
+                            "ADD COLUMN launchCount INTEGER NOT NULL DEFAULT 0;");
+                    db.execSQL("ALTER TABLE favorites " +
+                            "ADD COLUMN sortType INTEGER NOT NULL DEFAULT 0;");
+                    db.setTransactionSuccessful();
+                    version = 15;
+                } catch (SQLException ex) {
+                    // Old version remains, which means we wipe old data
+                    Log.e(TAG, ex.getMessage(), ex);
+                } finally {
+                    db.endTransaction();
+                }
             }
 
             if (version != DATABASE_VERSION) {
