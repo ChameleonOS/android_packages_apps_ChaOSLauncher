@@ -79,19 +79,6 @@ public class Preferences extends PreferenceActivity
         while (i < headers.size()) {
             Header header = headers.get(i);
 
-            if (header.id == R.id.preferences_general_section) {
-                Calendar calendar = Calendar.getInstance();
-                if (calendar.get(Calendar.HOUR_OF_DAY) == 3) {
-                    String[] strings = getResources().getStringArray(R.array.preferences_koush);
-                    Random random = new Random();
-                    for (int j = 0; j < 20; j++) {
-                        Header h = new Header();
-                        h.title = strings[random.nextInt(strings.length)];
-                        headers.add(i + 1, h);
-                    }
-                }
-            }
-
             // Version preference
             if (header.id == R.id.preferences_application_version) {
                 header.title = getString(R.string.application_name) + " " + getString(R.string.application_version);
