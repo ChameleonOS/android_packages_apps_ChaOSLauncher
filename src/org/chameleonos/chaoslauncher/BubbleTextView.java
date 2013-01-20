@@ -95,6 +95,7 @@ public class BubbleTextView extends TextView implements ShortcutInfo.ShortcutLis
         setCompoundDrawablesWithIntrinsicBounds(null,
                 new FastBitmapDrawable(b),
                 null, null);
+        setCompoundDrawablePadding(0);
         setText(info.title);
         setTag(info);
         info.setListener(this);

@@ -57,6 +57,7 @@ public class PagedViewIcon extends TextView {
         mIcon = info.iconBitmap;
         mPressedCallback = cb;
         setCompoundDrawablesWithIntrinsicBounds(null, new FastBitmapDrawable(mIcon), null, null);
+        setCompoundDrawablePadding(0);
         setText(info.title);
         setTag(info);
     }
