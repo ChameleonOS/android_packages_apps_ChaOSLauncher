@@ -528,7 +528,7 @@ public class FolderIcon extends LinearLayout implements FolderListener {
     private PreviewItemDrawingParams computePreviewItemDrawingParamsGrid(int index,
             PreviewItemDrawingParams params) {
         //index = mNumItemsInPreview - index - 1;
-        float iconScale = 0.5f;
+        float iconScale = 0.45f;
 
         // We want to imagine our coordinates from the bottom left, growing up and to the
         // right. This is natural for the x-axis, but for the y-axis, we have to invert things.

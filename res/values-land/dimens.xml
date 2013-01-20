@@ -21,7 +21,7 @@
 
 <!-- Workspace -->
     <dimen name="hotseat_cell_width">64dp</dimen>
-    <dimen name="hotseat_cell_height">58dp</dimen>
+    <dimen name="hotseat_cell_height">68dp</dimen>
     <!-- We really want the page spacing to be the max of either the button bar
      height or the qsb bar height -->
     <dimen name="workspace_page_spacing">-1dp</dimen>

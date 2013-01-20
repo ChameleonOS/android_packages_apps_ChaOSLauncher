@@ -26,6 +26,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_width="@dimen/folder_preview_size"
         android:layout_height="@dimen/folder_preview_size"
+        android:paddingTop="@dimen/folder_icon_padding_top"
         android:src="@drawable/portal_ring_inner_holo"/>
     <org.chameleonos.chaoslauncher.BubbleTextView
         android:id="@+id/folder_icon_name"
