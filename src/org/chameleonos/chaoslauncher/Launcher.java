@@ -1710,16 +1710,6 @@ public final class Launcher extends Activity
         boolean allAppsVisible = (mAppsCustomizeTabHost.getVisibility() == View.VISIBLE);
         menu.setGroupVisible(MENU_GROUP_WALLPAPER, !allAppsVisible);
 
-        Intent launcherIntent = new Intent(Intent.ACTION_MAIN);
-        launcherIntent.addCategory(Intent.CATEGORY_HOME);
-        launcherIntent.addCategory(Intent.CATEGORY_DEFAULT);
-        ActivityInfo defaultLauncher = getPackageManager().resolveActivity(launcherIntent, PackageManager.MATCH_DEFAULT_ONLY).activityInfo;
-        // Hide preferences if not on CyanogenMod or not default launcher
-        // (in which case preferences don't get shown in system settings)
-        boolean preferencesVisible = !getPackageManager().hasSystemFeature("org.chameleonos.android") ||
-                !defaultLauncher.packageName.equals(getClass().getPackage().getName());
-        menu.findItem(MENU_PREFERENCES).setVisible(preferencesVisible);
-		
 		// only show the previews option if on the workspace
 		boolean previewsVisible =  mState == State.WORKSPACE;
 		menu.findItem(MENU_PREVIEWS).setVisible(previewsVisible);
@@ -3381,20 +3371,7 @@ public final class Launcher extends Activity
 
     private void updateOverflowMenuButton() {
         final View overflowMenuButton = findViewById(R.id.overflow_menu_button);
-        Intent launcherIntent = new Intent(Intent.ACTION_MAIN);
-        launcherIntent.addCategory(Intent.CATEGORY_HOME);
-        launcherIntent.addCategory(Intent.CATEGORY_DEFAULT);
-        ActivityInfo defaultLauncher = getPackageManager().resolveActivity(launcherIntent, PackageManager.MATCH_DEFAULT_ONLY).activityInfo;
-        // Hide preferences if not on CyanogenMod or not default launcher
-        // (in which case preferences don't get shown in system settings)
-        boolean preferencesVisible = !getPackageManager().hasSystemFeature("org.chameleonos.android") ||
-                !defaultLauncher.packageName.equals(getClass().getPackage().getName());
-        if (ViewConfiguration.get(this).hasPermanentMenuKey() || !preferencesVisible) {
-            overflowMenuButton.setVisibility(View.GONE);
-            overflowMenuButton.setEnabled(false);
-        } else {
-            overflowMenuButton.setVisibility(View.VISIBLE);
-        }
+        overflowMenuButton.setVisibility(View.VISIBLE);
     }
 
     /**
