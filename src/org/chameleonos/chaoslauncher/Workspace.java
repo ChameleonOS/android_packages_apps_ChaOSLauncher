@@ -520,11 +520,14 @@ public class Workspace extends PagedView
         mMultiTouchController = new MultiTouchController(this, false);
 
         final Resources res = getResources();
+        final float iconScale = (float)PreferencesProvider.Interface.General.getIconScale(
+                res.getInteger(R.integer.app_icon_scale_percentage)) / 100f;
 
         LayoutInflater inflater =
                 (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         for (int i = 0; i < mNumberHomescreens; i++) {
             CellLayout screen = (CellLayout) inflater.inflate(R.layout.workspace_screen, null);
+            screen.setChildrenScale(iconScale);
             if (mStretchScreens) {
                 screen.setCellGaps(-1, -1);
             }

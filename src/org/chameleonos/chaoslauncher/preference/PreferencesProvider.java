@@ -226,6 +226,9 @@ public final class PreferencesProvider {
             public static boolean getFullscreenMode() {
                 return getBoolean("ui_general_fullscreen", false);
             }
+            public static int getIconScale(int def) {
+                return getInt("ui_general_icon_scale", def);
+            }
         }
     }
 
