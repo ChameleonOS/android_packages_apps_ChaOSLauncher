@@ -1178,6 +1178,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
         // Ensure that we have the right number of pages
         Context context = getContext();
         int numPages = (int) Math.ceil((float) mFilteredApps.size() / (mCellCountX * mCellCountY));
+
         for (int i = 0; i < numPages; ++i) {
             PagedViewCellLayout layout = new PagedViewCellLayout(context);
             setupPage(layout);

@@ -22,6 +22,7 @@ import android.animation.AnimatorSet;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
+import android.appwidget.AppWidgetHostView;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -633,8 +634,10 @@ public class CellLayout extends ViewGroup {
             bubbleChild.setTextColor(res.getColor(R.color.workspace_icon_text_color));
         }
 
-        child.setScaleX(getChildrenScale());
-        child.setScaleY(getChildrenScale());
+        if (!(child instanceof AppWidgetHostView)) {
+            child.setScaleX(getChildrenScale());
+            child.setScaleY(getChildrenScale());
+        }
 
         // Generate an id for each view, this assumes we have at most 256x256 cells
         // per workspace screen
