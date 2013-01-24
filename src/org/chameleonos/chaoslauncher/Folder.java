@@ -170,6 +170,9 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         mContent = (CellLayout) findViewById(R.id.folder_content);
         mContent.setGridSize(0, 0);
         mContent.getShortcutsAndWidgets().setMotionEventSplittingEnabled(false);
+        float childScale = (float) PreferencesProvider.Interface.General.getIconScale(
+                getResources().getInteger(R.integer.app_icon_scale_percentage)) / 100f;
+        mContent.setChildrenScale(childScale);
         mFolderFooter = (FrameLayout) findViewById(R.id.folder_footer);
         mFolderName = (FolderEditText) findViewById(R.id.folder_name);
         mFolderName.setFolder(this);
