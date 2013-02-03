@@ -20,7 +20,7 @@ public class PreviewLayout extends FrameLayout
         LauncherTransitionable, DragSource, DropTarget {
     private static final int DEFAULT_CELL_COUNT_X = 3;
     private static final int DEFAULT_CELL_COUNT_Y = 3;
-    private static final int REORDER_ANIMATION_DURATION = 230;
+    private static final int REORDER_ANIMATION_DURATION = 150;
     private static final int MAX_SCREEN = 9;
     public static final String TAG = "PreviewLayout";
     private Drawable mBackgroundDrawable;
@@ -40,6 +40,7 @@ public class PreviewLayout extends FrameLayout
     View mCurrentDragView;
     boolean mDragInProgress = false;
     private Alarm mReorderAlarm = new Alarm();
+    private Object mLock = new Object();
 
     public PreviewLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -415,7 +416,8 @@ public class PreviewLayout extends FrameLayout
 
     @Override
     public void onDrop(DragObject d) {
-        boolean reorderHomescreens = false;
+        mReorderAlarm.cancelAlarm();
+        boolean reorderHomescreens = true;
         ItemInfo item = (ItemInfo) mCurrentDragView.getTag();
         int from = (int)item.id;
         int to = from;
