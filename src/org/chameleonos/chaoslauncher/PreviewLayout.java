@@ -458,7 +458,7 @@ public class PreviewLayout extends FrameLayout
         if (mTargetCell[0] != mPreviousTargetCell[0] || mTargetCell[1] != mPreviousTargetCell[1]) {
             mReorderAlarm.cancelAlarm();
             mReorderAlarm.setOnAlarmListener(mReorderAlarmListener);
-            mReorderAlarm.setAlarm(150);
+            mReorderAlarm.setAlarm(10);
             mPreviousTargetCell[0] = mTargetCell[0];
             mPreviousTargetCell[1] = mTargetCell[1];
         }
