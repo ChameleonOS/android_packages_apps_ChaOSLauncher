@@ -68,19 +68,6 @@ public class PreviewLayout extends FrameLayout
     }
 
     /**
-     * Have all the homescreens generate a new drawing cache for displaying as a preview
-     */
-    private void rebuildWorkspaceDrawingCache() {
-        for (int i = 0; i < mWorkspace.getChildCount(); i++) {
-            CellLayout cl = (CellLayout)mWorkspace.getChildAt(i);
-            cl.destroyDrawingCache();
-            cl.setDrawingCacheEnabled(true);
-            cl.buildDrawingCache();
-        }
-        mWorkspace.invalidate();
-    }
-
-    /**
      * Delete the home screen at the given index
      * @param index
      */
@@ -320,7 +307,6 @@ public class PreviewLayout extends FrameLayout
      * CellLayouts in mWorkspace
      */
     public void snapDrawingCacheToImageViews() {
-        rebuildWorkspaceDrawingCache();
         removeAllViews();
         int cellLayoutCount = mWorkspace.getPageCount();
         loadBackgroundResource();
