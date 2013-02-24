@@ -1282,6 +1282,7 @@ public final class Launcher extends Activity
         info.mFolderInfo = null;
     }
 
+<<<<<<< HEAD
     private void completeLiveFolder(ComponentName receiver, long container, int screen, int cellX,
             int cellY, String title) {
         CellLayout layout = getCellLayout(container, screen);
@@ -1290,6 +1291,8 @@ public final class Launcher extends Activity
                 mPendingAddInfo.cellX, mPendingAddInfo.cellY, title);
     }
 
+=======
+>>>>>>> Trebuchet: fix uninstall app from shortcut
     /**
      * Add a shortcut to the workspace.
      *
