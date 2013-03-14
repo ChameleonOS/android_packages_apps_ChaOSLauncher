@@ -2310,12 +2310,24 @@ public class Workspace extends PagedView
                     }
                 }
 
+<<<<<<< HEAD
                 // Carousel Effects
                 if (mTransitionEffect == TransitionEffect.CarouselLeft || mTransitionEffect == TransitionEffect.CarouselRight) {
                     if (i < mCurrentPage) {
                         rotationY = 90.0f;
                     } else if (i > mCurrentPage) {
                         rotationY = -90.0f;
+=======
+            // Accordion Effect
+            if (mTransitionEffect == TransitionEffect.Accordion) {
+                if (stateIsSpringLoaded) {
+                    cl.setVisibility(VISIBLE);
+                } else if (stateIsNormal) {
+                    if (i == mCurrentPage) {
+                        cl.setVisibility(VISIBLE);
+                    } else {
+                        cl.setVisibility(INVISIBLE);
+>>>>>>> Corrected misspelling of Accordion
                     }
                 }
             }
