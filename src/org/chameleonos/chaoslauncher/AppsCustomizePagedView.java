@@ -310,7 +310,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
         CubeIn,
         CubeOut,
         Stack,
-        Accordian,
+        Accordion,
         CylinderIn,
         CylinderOut
     }
@@ -1975,7 +1975,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
     }
 
 
-    private void screenScrolledAccordian(int screenScroll) {
+    private void screenScrolledAccordion(int screenScroll) {
         for (int i = 0; i < getChildCount(); i++) {
             View v = getPageAt(i);
             if (v != null) {
@@ -2150,8 +2150,8 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
                 case Stack:
                     screenScrolledStack(scroll);
                     break;
-                case Accordian:
-                    screenScrolledAccordian(scroll);
+                case Accordion:
+                    screenScrolledAccordion(scroll);
                     break;
                 case CylinderIn:
                     screenScrolledCylinder(scroll, true);

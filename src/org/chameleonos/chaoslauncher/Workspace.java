@@ -294,7 +294,7 @@ public class Workspace extends PagedView
         CubeIn,
         CubeOut,
         Stack,
-        Accordian,
+        Accordion,
         CylinderIn,
         CylinderOut
     }
@@ -1562,7 +1562,7 @@ public class Workspace extends PagedView
         invalidate();
     }
 
-    private void screenScrolledAccordian(int screenScroll) {
+    private void screenScrolledAccordion(int screenScroll) {
         for (int i = 0; i < getChildCount(); i++) {
             CellLayout cl = (CellLayout) getPageAt(i);
             if (cl != null) {
@@ -1717,8 +1717,8 @@ public class Workspace extends PagedView
                     case Stack:
                         screenScrolledStack(scroll);
                         break;
-                    case Accordian:
-                        screenScrolledAccordian(scroll);
+                    case Accordion:
+                        screenScrolledAccordion(scroll);
                         break;
                     case CylinderIn:
                         screenScrolledCylinder(scroll, true);
@@ -2234,8 +2234,8 @@ public class Workspace extends PagedView
                 }
             }
 
-            // Accordian Effect
-            if (mTransitionEffect == TransitionEffect.Accordian) {
+            // Accordion Effect
+            if (mTransitionEffect == TransitionEffect.Accordion) {
                 if (stateIsSpringLoaded) {
                     cl.setVisibility(VISIBLE);
                 } else if (stateIsNormal) {
