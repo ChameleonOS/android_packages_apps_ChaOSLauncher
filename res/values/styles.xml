@@ -88,7 +88,8 @@
     <style name="WorkspaceIcon.Portrait.Folder">
         <item name="android:shadowRadius">0.0</item> <!-- Don't use text shadow -->
         <item name="android:drawablePadding">0dp</item>
-        <item name="android:paddingTop">@dimen/folder_icon_padding_top</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:layout_marginTop">-2dp</item>
     </style>
     <style name="WorkspaceIcon.Landscape.Folder">
         <item name="android:shadowRadius">0.0</item> <!-- Don't use text shadow -->

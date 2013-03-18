@@ -635,11 +635,6 @@ public class CellLayout extends ViewGroup {
             bubbleChild.setTextColor(res.getColor(R.color.workspace_icon_text_color));
         }
 
-        if (!(child instanceof AppWidgetHostView)) {
-            child.setScaleX(getChildrenScale());
-            child.setScaleY(getChildrenScale());
-        }
-
         // Generate an id for each view, this assumes we have at most 256x256 cells
         // per workspace screen
         if (lp.cellX >= 0 && lp.cellX <= mCountX - 1 && lp.cellY >= 0 && lp.cellY <= mCountY - 1) {

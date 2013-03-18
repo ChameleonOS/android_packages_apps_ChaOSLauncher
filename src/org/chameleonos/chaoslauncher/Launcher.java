@@ -333,6 +333,8 @@ public final class Launcher extends Activity
 
     private boolean mWallpaperVisible;
 
+    private float mIconScale = 1.0f;
+
     // Previews
     private PreviewLayout mPreviewLayout;
 
@@ -391,6 +393,9 @@ public final class Launcher extends Activity
 
         // Load all preferences
         PreferencesProvider.load(this);
+
+        mIconScale = (float) PreferencesProvider.Interface.General.getIconScale(
+                getResources().getInteger(R.integer.app_icon_scale_percentage)) / 100f;
 
         mAppWidgetManager = AppWidgetManager.getInstance(this);
         mAppWidgetHost = new LauncherAppWidgetHost(this, APPWIDGET_HOST_ID);
@@ -1138,8 +1143,16 @@ public final class Launcher extends Activity
      */
     View createShortcut(int layoutResId, ViewGroup parent, ShortcutInfo info) {
         BubbleTextView favorite = (BubbleTextView) mInflater.inflate(layoutResId, parent, false);
+<<<<<<< HEAD
         favorite.applyFromShortcutInfo(info, mIconCache);
         favorite.setTextVisible(!mHideIconLabels);
+=======
+        float scale = info.container == LauncherSettings.Favorites.CONTAINER_HOTSEAT ? 1.0f : mIconScale;
+        favorite.applyFromShortcutInfo(info, mIconCache, scale);
+        if (mHideIconLabels) {
+            favorite.setTextVisible(false);
+        }
+>>>>>>> Scale the icon bitmap associated with icons and not the entire view which included the text
         favorite.setOnClickListener(this);
         favorite.setOnTouchListener(this);
         return favorite;
