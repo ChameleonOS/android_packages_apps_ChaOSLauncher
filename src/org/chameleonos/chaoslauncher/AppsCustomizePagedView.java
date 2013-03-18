@@ -278,6 +278,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
     // Dimens
     private int mContentWidth;
     private int mAppIconSize;
+    private float mIconScale;
     private int mMaxAppCellCountX, mMaxAppCellCountY;
     private int mWidgetCountX, mWidgetCountY;
     private int mWidgetWidthGap, mWidgetHeightGap;
@@ -400,7 +401,9 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
         }
 
         // Save the default widget preview background
-        mAppIconSize = resources.getDimensionPixelSize(R.dimen.app_icon_size);
+        mIconScale = (float) PreferencesProvider.Interface.General.getIconScale(
+                resources.getInteger(R.integer.app_icon_scale_percentage)) / 100f;
+        mAppIconSize = (int)((float)resources.getDimensionPixelSize(R.dimen.app_icon_size) * mIconScale);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AppsCustomizePagedView, 0, 0);
         mMaxAppCellCountX = a.getInt(R.styleable.AppsCustomizePagedView_maxAppCellCountX, -1);
@@ -1233,7 +1236,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
             ApplicationInfo info = mFilteredApps.get(i);
             PagedViewIcon icon = (PagedViewIcon) mLayoutInflater.inflate(
                     R.layout.apps_customize_application, layout, false);
-            icon.applyFromApplicationInfo(info, true, this);
+            icon.applyFromApplicationInfo(info, mIconScale, true, this);
             icon.setOnClickListener(this);
             icon.setOnLongClickListener(this);
             icon.setOnTouchListener(this);

@@ -45,7 +45,6 @@ public class PagedViewCellLayout extends ViewGroup implements Page {
     private int mWidthGap;
     private int mHeightGap;
     private int mMaxGap;
-    private float mChildrenScale = 1f;
     protected PagedViewCellLayoutChildren mChildren;
 
     public PagedViewCellLayout(Context context) {
@@ -71,9 +70,6 @@ public class PagedViewCellLayout extends ViewGroup implements Page {
         mCellCountY = LauncherModel.getWorkspaceCellCountY();
         mOriginalWidthGap = mOriginalHeightGap = mWidthGap = mHeightGap = -1;
         mMaxGap = resources.getDimensionPixelSize(R.dimen.apps_customize_max_gap);
-
-        mChildrenScale = (float) PreferencesProvider.Interface.General.getIconScale(
-                getResources().getInteger(R.integer.app_icon_scale_percentage)) / 100f;
 
         mChildren = new PagedViewCellLayoutChildren(context);
         mChildren.setCellDimensions(mCellWidth, mCellHeight);
@@ -126,9 +122,6 @@ public class PagedViewCellLayout extends ViewGroup implements Page {
             if (lp.cellHSpan < 0) lp.cellHSpan = mCellCountX;
             if (lp.cellVSpan < 0) lp.cellVSpan = mCellCountY;
 
-            child.setScaleX(getChildrenScale());
-            child.setScaleY(getChildrenScale());
-
             child.setId(childId);
             mChildren.addView(child, index, lp);
 
@@ -175,14 +168,6 @@ public class PagedViewCellLayout extends ViewGroup implements Page {
     @Override
     public int indexOfChildOnPage(View v) {
         return mChildren.indexOfChild(v);
-    }
-
-    public void setChildrenScale(float childrenScale) {
-        mChildrenScale = childrenScale;
-    }
-
-    public float getChildrenScale() {
-        return mChildrenScale;
     }
 
     public int getCellCountX() {

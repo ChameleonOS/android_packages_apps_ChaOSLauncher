@@ -4358,6 +4358,8 @@ public class Workspace extends PagedView
     }
 
     void updateShortcuts(ArrayList<ApplicationInfo> apps) {
+        float iconScale = (float) PreferencesProvider.Interface.General.getIconScale(
+                getResources().getInteger(R.integer.app_icon_scale_percentage)) / 100f;
         ArrayList<ShortcutAndWidgetContainer> childrenLayouts = getAllShortcutAndWidgetContainers();
         for (ShortcutAndWidgetContainer layout: childrenLayouts) {
             int childCount = layout.getChildCount();
@@ -4381,7 +4383,7 @@ public class Workspace extends PagedView
                                 BubbleTextView shortcut = (BubbleTextView) view;
                                 info.updateIcon(mIconCache);
                                 info.title = app.title.toString();
-                                shortcut.applyFromShortcutInfo(info, mIconCache);
+                                shortcut.applyFromShortcutInfo(info, mIconCache, iconScale);
                             }
                         }
                     }

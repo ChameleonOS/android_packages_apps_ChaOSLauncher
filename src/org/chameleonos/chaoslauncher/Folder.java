@@ -22,6 +22,7 @@ import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -118,6 +119,8 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
 
     private boolean mDestroyed;
 
+    private float mIconScale = 1.0f;
+
     /**
      * Used to inflate the Workspace from XML.
      *
@@ -139,6 +142,9 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
             mMaxCountY = LauncherModel.getWorkspaceCellCountY();
             mMaxNumItems = mMaxCountX * mMaxCountY;
         }
+
+        mIconScale = (float) PreferencesProvider.Interface.General.getIconScale(
+                res.getInteger(R.integer.app_icon_scale_percentage)) / 100f;
 
         mInputMethodManager = (InputMethodManager)
                 getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -164,9 +170,6 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         mContent = (CellLayout) findViewById(R.id.folder_content);
         mContent.setGridSize(0, 0);
         mContent.getShortcutsAndWidgets().setMotionEventSplittingEnabled(false);
-        float childScale = (float) PreferencesProvider.Interface.General.getIconScale(
-                getResources().getInteger(R.integer.app_icon_scale_percentage)) / 100f;
-        mContent.setChildrenScale(childScale);
         mFolderFooter = (FrameLayout) findViewById(R.id.folder_footer);
         mFolderName = (FolderEditText) findViewById(R.id.folder_name);
         mFolderName.setFolder(this);
@@ -468,8 +471,8 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
      */
     private void positionAndSizeAsIcon() {
         if (!(getParent() instanceof DragLayer)) return;
-        setScaleX(0.8f);
-        setScaleY(0.8f);
+        setScaleX(mIconScale);
+        setScaleY(mIconScale);
         setAlpha(0f);
         mState = STATE_SMALL;
     }
@@ -599,8 +602,14 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
     protected boolean createAndAddShortcut(ShortcutInfo item) {
         final TextView textView =
             (TextView) mInflater.inflate(R.layout.application, this, false);
+
+        Bitmap b = item.getIcon(mIconCache);
+        int width = (int)((float)b.getWidth() * mIconScale);
+        int height = (int)((float)b.getHeight() * mIconScale);
+        FastBitmapDrawable d = new FastBitmapDrawable(Bitmap.createScaledBitmap(b,
+                width, height, true));
         textView.setCompoundDrawablesWithIntrinsicBounds(null,
-                new FastBitmapDrawable(item.getIcon(mIconCache)), null, null);
+                d, null, null);
         textView.setText(item.title);
         textView.setTag(item);
 

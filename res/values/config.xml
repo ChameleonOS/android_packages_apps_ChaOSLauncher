@@ -95,8 +95,8 @@
     <integer name="hotseat_cell_count">5</integer>
     <integer name="hotseat_all_apps_index">2</integer>
     <!-- must be between 0 and 100 -->
-    <integer name="hotseat_item_scale_percentage">100</integer>
+    <integer name="hotseat_item_scale_percentage">90</integer>
 
     <!-- must be between 0 and 100 -->
-    <integer name="app_icon_scale_percentage">100</integer>
+    <integer name="app_icon_scale_percentage">90</integer>
 </resources>
