@@ -81,14 +81,14 @@ public class IconCache {
     }
 
     public Drawable getFullResIcon(String packageName, int iconId) {
-        ActivityInfo info = null;
+        android.content.pm.ApplicationInfo info = null;
         try{
-            info = mPackageManager.getActivityInfo(new ComponentName(packageName, packageName), 0);
+            info = mPackageManager.getApplicationInfo(packageName, 0);
         } catch (PackageManager.NameNotFoundException e) {
             info = null;
         }
         if (info != null) {
-            return getFullResIcon(info);
+            return getFullResIcon(info, packageName, iconId);
         }
         return getFullResDefaultActivityIcon();
     }
@@ -135,6 +135,26 @@ public class IconCache {
             int iconId = info.getIconResource();
             if (iconId != 0) {
                 Drawable dr = ThemeHelper.getDrawable(mPackageManager, info.packageName, iconId, info.applicationInfo, className);
+                if (dr == null)
+                    dr = getFullResIcon(resources, iconId);
+                return dr;
+            }
+        }
+        return getFullResDefaultActivityIcon();
+    }
+
+    public Drawable getFullResIcon(android.content.pm.ApplicationInfo info,
+            String packageName, int iconId) {
+
+        Resources resources;
+        try {
+            resources = mPackageManager.getResourcesForApplication(info);
+        } catch (PackageManager.NameNotFoundException e) {
+            resources = null;
+        }
+        if (resources != null) {
+            if (iconId != 0) {
+                Drawable dr = ThemeHelper.getDrawable(mPackageManager, packageName, iconId, info, packageName);
                 if (dr == null)
                     dr = getFullResIcon(resources, iconId);
                 return dr;
