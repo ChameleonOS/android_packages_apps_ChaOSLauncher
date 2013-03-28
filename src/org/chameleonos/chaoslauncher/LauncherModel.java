@@ -2454,6 +2454,12 @@ public class LauncherModel extends BroadcastReceiver {
         if (info == null) {
             return null;
         }
+
+        // if an application is being added as a shortcut set the itemType to ITEM_TYPE_APPLICATION.
+        // this will allow the theme engine to properly change the icon
+        if (info.intent.getAction() == Intent.ACTION_MAIN &&
+                info.intent.getCategories().contains(Intent.CATEGORY_LAUNCHER))
+            info.itemType = LauncherSettings.Favorites.ITEM_TYPE_APPLICATION;
         addItemToDatabase(context, info, container, screen, cellX, cellY, notify);
 
         return info;
@@ -2487,7 +2493,7 @@ public class LauncherModel extends BroadcastReceiver {
                             iconResource.packageName);
                     final int id = resources.getIdentifier(iconResource.resourceName, null, null);
                     icon = Utilities.createIconBitmap(
-                            mIconCache.getFullResIcon(resources, id), context);
+                            mIconCache.getFullResIcon(iconResource.packageName, id), context);
                 } catch (Exception e) {
                     Log.w(TAG, "Could not load shortcut icon: " + extra);
                 }
@@ -2509,7 +2515,7 @@ public class LauncherModel extends BroadcastReceiver {
         info.title = name;
         info.intent = intent;
         info.customIcon = customIcon;
-        info.iconResource = iconResource;
+        info.iconResource = null;//iconResource;
 
         return info;
     }
