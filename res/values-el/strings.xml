@@ -70,7 +70,7 @@
     <string name="menu_search" msgid="4826514464423239041">"Αναζήτηση"</string>
     <string name="menu_notifications" msgid="6424587053194766192">"Ειδοποιήσεις"</string>
     <string name="menu_settings" msgid="3946232973327980394">"Ρυθμίσεις συστήματος"</string>
-    <string name="menu_preferences">Ρυθμίσεις ChaOSLauncher</string>
+    <string name="menu_preferences">Ρυθμίσεις ChaOS Launcher</string>
     <string name="menu_help" msgid="4901160661634590633">"Βοήθεια"</string>
     <string name="menu_apps_sort_title">Όνομα</string>
     <string name="menu_apps_sort_install_date">Ημερομηνία εγκατάστασης</string>

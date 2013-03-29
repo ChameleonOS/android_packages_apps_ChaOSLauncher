@@ -117,7 +117,7 @@
     <string name="cancel_target_label">Annuleren</string>
 
     <!-- Noun, menu item used to show the launcher preferences -->
-    <string name="menu_preferences">ChaOSLauncher-instellingen</string>
+    <string name="menu_preferences">ChaOS Launcher-instellingen</string>
 
     <!-- Noun, menu item used to sort apps by name -->
     <string name="menu_apps_sort_title">Naam</string>
