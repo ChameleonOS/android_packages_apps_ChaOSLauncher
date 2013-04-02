@@ -179,12 +179,10 @@ public class PreviewLayout extends FrameLayout
                 image.setSelected(false);
         } else {
             image.setOnClickListener(this);
-            image.bringToFront();
             image = (ImageView)layout.findViewById(R.id.preview_screen);
             image.setOnClickListener(this);
             image.setOnLongClickListener(this);
             image = (ImageView)layout.findViewById(R.id.home_button);
-            image.setScaleType(ImageView.ScaleType.FIT_XY);
             image.setOnClickListener(this);
             if (isDefault)
                 image.setSelected(true);
