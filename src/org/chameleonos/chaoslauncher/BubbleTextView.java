@@ -106,15 +106,25 @@ public class BubbleTextView extends TextView implements ShortcutInfo.ShortcutLis
 
         int width = (int)((float)b.getWidth() * scale);
         int height = (int)((float)b.getHeight() * scale);
-        FastBitmapDrawable d = new FastBitmapDrawable(Bitmap.createScaledBitmap(b,
-                width, height, true));
+        FastBitmapDrawable d = new FastBitmapDrawable(b);
+        d.setBounds(new Rect(0, 0, width, height));
 
-        setCompoundDrawablesWithIntrinsicBounds(null,
+        setCompoundDrawables(null,
                 d, null, null);
         setCompoundDrawablePadding(0);
         setText(info.title);
         setTag(info);
         info.setListener(this);
+    }
+
+    public void setIconScale(float scale) {
+        Drawable d = getCompoundDrawables()[1];
+        Bitmap b = ((FastBitmapDrawable)d).getBitmap();
+        int width = (int)((float)b.getWidth() * scale);
+        int height = (int)((float)b.getHeight() * scale);
+        d.setBounds(new Rect(0, 0, width, height));
+        setCompoundDrawables(null,
+                d, null, null);
     }
 
     @Override

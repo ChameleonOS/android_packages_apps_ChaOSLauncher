@@ -3037,6 +3037,15 @@ public class Workspace extends PagedView
                     cell.setId(LauncherModel.getCellLayoutChildId(container, mDragInfo.screen,
                             mTargetCell[0], mTargetCell[1]));
 
+                    if (cell instanceof BubbleTextView) {
+                        ((BubbleTextView)cell).setIconScale(dropTargetLayout.getChildrenScale());
+                        if (container == Favorites.CONTAINER_HOTSEAT) {
+                            cell.setScaleX(dropTargetLayout.getChildrenScale());
+                            cell.setScaleY(dropTargetLayout.getChildrenScale());
+                            cell.invalidate();
+                        }
+                    }
+
                     if (container != LauncherSettings.Favorites.CONTAINER_HOTSEAT &&
                             cell instanceof LauncherAppWidgetHostView) {
                         final CellLayout cellLayout = dropTargetLayout;
@@ -3884,6 +3893,14 @@ public class Workspace extends PagedView
                         null, mTargetCell, null, CellLayout.MODE_ON_DROP_EXTERNAL);
             } else {
                 cellLayout.findCellForSpan(mTargetCell, 1, 1);
+            }
+            if (view instanceof BubbleTextView) {
+                ((BubbleTextView)view).setIconScale(cellLayout.getChildrenScale());
+                if (container == Favorites.CONTAINER_HOTSEAT) {
+                    view.setScaleX(cellLayout.getChildrenScale());
+                    view.setScaleY(cellLayout.getChildrenScale());
+                    view.invalidate();
+                }
             }
             addInScreen(view, container, screen, mTargetCell[0], mTargetCell[1], info.spanX,
                     info.spanY, insertAtFirst);

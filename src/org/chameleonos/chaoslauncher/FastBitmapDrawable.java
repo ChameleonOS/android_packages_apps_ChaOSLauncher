@@ -45,8 +45,13 @@ class FastBitmapDrawable extends Drawable {
     @Override
     public void draw(Canvas canvas) {
         final Rect r = getBounds();
+<<<<<<< HEAD
         // Draw the bitmap into the bounding rect
         canvas.drawBitmap(mBitmap, null, r, mPaint);
+=======
+        final Rect src = new Rect(0, 0, mWidth, mHeight);
+        canvas.drawBitmap(mBitmap, src, r, mPaint);
+>>>>>>> Don't scale the icon bitmap for icon scaling.  Use the drawable bounds to define the location and size of the icon and have FastBitmapDrawable use these bounds when drawing the bitmap.  This allows the icon to be scaled and the scale changed without creating a scaled bitmap.
     }
 
     @Override

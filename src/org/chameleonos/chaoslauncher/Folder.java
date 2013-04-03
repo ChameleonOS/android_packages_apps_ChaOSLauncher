@@ -645,15 +645,15 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
     }
 
     protected boolean createAndAddShortcut(ShortcutInfo item) {
-        final TextView textView =
-            (TextView) mInflater.inflate(R.layout.application, this, false);
+        final BubbleTextView textView =
+            (BubbleTextView) mInflater.inflate(R.layout.application, this, false);
 
         Bitmap b = item.getIcon(mIconCache);
         int width = (int)((float)b.getWidth() * mIconScale);
         int height = (int)((float)b.getHeight() * mIconScale);
-        FastBitmapDrawable d = new FastBitmapDrawable(Bitmap.createScaledBitmap(b,
-                width, height, true));
-        textView.setCompoundDrawablesWithIntrinsicBounds(null,
+        FastBitmapDrawable d = new FastBitmapDrawable(b);
+        d.setBounds(new Rect(0, 0, width, height));
+        textView.setCompoundDrawables(null,
                 d, null, null);
         textView.setText(item.title);
         textView.setTag(item);
