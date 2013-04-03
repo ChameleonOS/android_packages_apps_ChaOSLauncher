@@ -456,7 +456,7 @@ public class CellLayout extends ViewGroup {
             final float alpha = mDragOutlineAlphas[i];
             if (alpha > 0) {
                 final Rect r = mDragOutlines[i];
-                scaleRectAboutCenter(r, temp, getChildrenScale());
+                scaleRectAboutCenter(r, temp, 1f);
                 final Bitmap b = (Bitmap) mDragOutlineAnims[i].getTag();
                 paint.setAlpha((int)(alpha + .5f));
                 canvas.drawBitmap(b, null, temp, paint);
@@ -2134,7 +2134,7 @@ public class CellLayout extends ViewGroup {
             }
             initDeltaX = child.getTranslationX();
             initDeltaY = child.getTranslationY();
-            finalScale = getChildrenScale() - 4.0f / child.getWidth();
+            finalScale = 3.0f / child.getWidth();
             initScale = child.getScaleX();
             this.child = child;
         }
@@ -2176,7 +2176,7 @@ public class CellLayout extends ViewGroup {
                     // We make sure to end only after a full period
                     initDeltaX = 0;
                     initDeltaY = 0;
-                    initScale = getChildrenScale();
+                    initScale = 1f;
                 }
             });
             mShakeAnimators.put(child, this);
@@ -2197,8 +2197,8 @@ public class CellLayout extends ViewGroup {
             AnimatorSet s = LauncherAnimUtils.createAnimatorSet();
             a = s;
             s.playTogether(
-                LauncherAnimUtils.ofFloat(child, "scaleX", getChildrenScale()),
-                LauncherAnimUtils.ofFloat(child, "scaleY", getChildrenScale()),
+                LauncherAnimUtils.ofFloat(child, "scaleX", 1f),
+                LauncherAnimUtils.ofFloat(child, "scaleY", 1f),
                 LauncherAnimUtils.ofFloat(child, "translationX", 0f),
                 LauncherAnimUtils.ofFloat(child, "translationY", 0f)
             );
