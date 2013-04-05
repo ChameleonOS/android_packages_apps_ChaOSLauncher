@@ -2134,7 +2134,7 @@ public class CellLayout extends ViewGroup {
             }
             initDeltaX = child.getTranslationX();
             initDeltaY = child.getTranslationY();
-            finalScale = 3.0f / child.getWidth();
+            finalScale = 1.0f - 4.0f / child.getWidth();
             initScale = child.getScaleX();
             this.child = child;
         }
