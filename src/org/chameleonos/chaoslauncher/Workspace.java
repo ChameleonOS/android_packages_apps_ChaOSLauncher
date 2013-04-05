@@ -63,6 +63,7 @@ import android.widget.TextView;
 import org.chameleonos.chaoslauncher.FolderIcon.FolderRingAnimator;
 import org.chameleonos.chaoslauncher.LauncherSettings.Favorites;
 import org.chameleonos.chaoslauncher.preference.PreferencesProvider;
+import org.chameleonos.chaoslauncher.preference.Preferences;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -99,6 +100,8 @@ public class Workspace extends PagedView
     private static final int ADJACENT_SCREEN_DROP_DURATION = 300;
     private static final int FLING_THRESHOLD_VELOCITY = 500;
 
+    private static final int MIN_MULTITOUCH_EVENT_INTERVAL = 500;
+
     // Pivot point for rotate anim
     private float mRotatePivotPoint = -1;
     private static final int MAX_HOMESCREENS = 9;
@@ -127,6 +130,9 @@ public class Workspace extends PagedView
     private int[] mWallpaperOffsets = new int[2];
     private Paint mPaint = new Paint();
     private IBinder mWindowToken;
+
+    private long mLastMultitouch = 0;
+
 
     /**
      * CellInfo for the cell that is currently being dragged
@@ -4468,13 +4474,22 @@ public class Workspace extends PagedView
     @Override
     public boolean setPositionAndScale(Object obj, PositionAndScale newObjPosAndScale, PointInfo touchPoint) {
         double pinch = Math.round(Math.log(newObjPosAndScale.getScale()) * ZOOM_LOG_BASE_INV);
+        long delta = System.currentTimeMillis() - mLastMultitouch;
         if (pinch < 0 &&
                 mLauncher.mState == Launcher.State.WORKSPACE) {
             disableScrollingIndicator();
             mLauncher.showPreviewLayout(true);
             return true;
+        } else if (pinch > 0 &&
+                mLauncher.mState == Launcher.State.WORKSPACE &&
+                delta >= MIN_MULTITOUCH_EVENT_INTERVAL) {
+            Intent preferences = new Intent().setClass(mLauncher, Preferences.class);
+            preferences.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP
+                    | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+            mLauncher.startActivity(preferences);
+            mLastMultitouch = System.currentTimeMillis();
+            return true;
         }
-
         return false;
     }
 
