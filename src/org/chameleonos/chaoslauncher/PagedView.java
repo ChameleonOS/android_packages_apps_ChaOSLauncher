@@ -184,6 +184,8 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
     // All syncs and layout passes are deferred until data is ready.
     protected boolean mIsDataReady = false;
 
+    boolean mIsDragOccuring = false;
+
     // Scrolling indicator
     private ValueAnimator mScrollIndicatorAnimator;
     private View mScrollIndicator;
@@ -1128,7 +1130,7 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
                 mLastMotionYRemainder = 0;
                 mTotalMotionX = 0;
                 mTotalMotionY = 0;
-                mActivePointerId = ev.getPointerId(0);
+                mActivePointerId = ev.getPointerId(ev.getActionIndex());
                 mAllowLongPress = true;
 
                 /*
@@ -1362,6 +1364,7 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
         final int action = ev.getAction();
 
         switch (action & MotionEvent.ACTION_MASK) {
+        case MotionEvent.ACTION_POINTER_DOWN:
         case MotionEvent.ACTION_DOWN:
             /*
              * If being flinged and user touches, stop the fling. isFinished
@@ -1378,7 +1381,10 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
             mLastMotionYRemainder = 0;
             mTotalMotionX = 0;
             mTotalMotionY = 0;
-            mActivePointerId = ev.getPointerId(0);
+            if (mIsDragOccuring)
+                mActivePointerId = ev.getPointerId(ev.getActionIndex());
+            else
+                mActivePointerId = ev.getPointerId(0);
             if (mTouchState == TOUCH_STATE_SCROLLING) {
                 pageBeginMoving();
             }
@@ -1431,6 +1437,11 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
             }
             break;
 
+        case MotionEvent.ACTION_POINTER_UP:
+            if (!mIsDragOccuring) {
+                onSecondaryPointerUp(ev);
+                break;
+            }
         case MotionEvent.ACTION_UP:
             if (mTouchState == TOUCH_STATE_SCROLLING) {
                 final int activePointerId = mActivePointerId;
@@ -1529,10 +1540,6 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
             mTouchState = TOUCH_STATE_REST;
             mActivePointerId = INVALID_POINTER;
             releaseVelocityTracker();
-            break;
-
-        case MotionEvent.ACTION_POINTER_UP:
-            onSecondaryPointerUp(ev);
             break;
         }
 

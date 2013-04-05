@@ -189,7 +189,6 @@ public class Workspace extends PagedView
     private boolean mIsSwitchingState = false;
 
     boolean mAnimatingViewIntoPlace = false;
-    boolean mIsDragOccuring = false;
     boolean mChildrenLayersEnabled = true;
 
     private boolean mIsLandscape;
@@ -824,9 +823,10 @@ public class Workspace extends PagedView
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        if (mMultiTouchController.onTouchEvent(ev))
+        if (!mIsDragOccuring && mMultiTouchController.onTouchEvent(ev))
             return false;
         switch (ev.getAction() & MotionEvent.ACTION_MASK) {
+        case MotionEvent.ACTION_POINTER_DOWN:
         case MotionEvent.ACTION_DOWN:
             mXDown = ev.getX();
             mYDown = ev.getY();
