@@ -137,4 +137,21 @@
         <item>48</item>
         <item>62</item>
     </string-array>
+
+    <string-array name="gesture_target_names">
+        <item>Nothing</item>
+        <item>Expand status bar</item>
+        <item>Go to default homescreen</item>
+        <item>Open app drawer</item>
+        <item>Show previews</item>
+        <item>Open launcher settings</item>
+    </string-array>
+    <string-array name="gesture_target_values" translatable="false" >
+        <item>nothing</item>
+        <item>expand_status_bar</item>
+        <item>default_homescreen</item>
+        <item>open_app_drawer</item>
+        <item>show_previews</item>
+        <item>show_settings</item>
+    </string-array>
 </resources>

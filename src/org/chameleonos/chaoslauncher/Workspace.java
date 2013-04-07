@@ -23,6 +23,7 @@ import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
+import android.app.StatusBarManager;
 import android.app.WallpaperManager;
 import android.appwidget.AppWidgetHostView;
 import android.appwidget.AppWidgetProviderInfo;
@@ -60,6 +61,7 @@ import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import android.widget.Toast;
 import org.chameleonos.chaoslauncher.FolderIcon.FolderRingAnimator;
 import org.chameleonos.chaoslauncher.LauncherSettings.Favorites;
 import org.chameleonos.chaoslauncher.preference.PreferencesProvider;
@@ -102,6 +104,8 @@ public class Workspace extends PagedView
 
     private static final int MIN_MULTITOUCH_EVENT_INTERVAL = 500;
 
+    private static final int MIN_UP_DOWN_GESTURE_DISTANCE = 200;
+
     // Pivot point for rotate anim
     private float mRotatePivotPoint = -1;
     private static final int MAX_HOMESCREENS = 9;
@@ -132,6 +136,7 @@ public class Workspace extends PagedView
     private IBinder mWindowToken;
 
     private long mLastMultitouch = 0;
+    private boolean mMultitouchGestureDetected = false;
 
 
     /**
@@ -333,6 +338,12 @@ public class Workspace extends PagedView
 
     private MultiTouchController<Object> mMultiTouchController;
 
+    // homescreen gestures
+    private String mUpGestureAction;
+    private String mDownGestureAction;
+    private String mPinchGestureAction;
+    private String mSpreadGestureAction;
+
     /**
      * Used to inflate the Workspace from XML.
      *
@@ -422,6 +433,11 @@ public class Workspace extends PagedView
         mFadeScrollingIndicator = PreferencesProvider.Interface.Homescreen.Indicator.getFadeScrollingIndicator();
         mScrollingIndicatorPosition = PreferencesProvider.Interface.Homescreen.Indicator.getScrollingIndicatorPosition();
         mShowDockDivider = PreferencesProvider.Interface.Dock.getShowDivider() && mShowHotseat;
+
+        mUpGestureAction = PreferencesProvider.Interface.Homescreen.Gestures.getUpGestureAction();
+        mDownGestureAction = PreferencesProvider.Interface.Homescreen.Gestures.getDownGestureAction();
+        mPinchGestureAction = PreferencesProvider.Interface.Homescreen.Gestures.getPinchGestureAction();
+        mSpreadGestureAction = PreferencesProvider.Interface.Homescreen.Gestures.getSpreadGestureAction();
 
         initWorkspace();
         checkWallpaper();
@@ -831,7 +847,6 @@ public class Workspace extends PagedView
             mXDown = ev.getX();
             mYDown = ev.getY();
             break;
-        case MotionEvent.ACTION_POINTER_UP:
         case MotionEvent.ACTION_UP:
             if (mTouchState == TOUCH_STATE_REST) {
                 final CellLayout currentPage = (CellLayout) getChildAt(mCurrentPage);
@@ -839,6 +854,17 @@ public class Workspace extends PagedView
                     onWallpaperTap(ev);
                 }
             }
+            if (!mIsDragOccuring && mTouchState != TOUCH_STATE_SCROLLING && !mMultitouchGestureDetected) {
+                final float y = ev.getY();
+                final int deltaY = (int) (y - mLastMotionY);
+                if (deltaY >= MIN_UP_DOWN_GESTURE_DISTANCE) {
+                    performGestureAction(mDownGestureAction);
+                } else if(deltaY <= -MIN_UP_DOWN_GESTURE_DISTANCE) {
+                    performGestureAction(mUpGestureAction);
+                }
+            }
+            mMultitouchGestureDetected = false;
+            break;
         }
         return super.onInterceptTouchEvent(ev);
     }
@@ -4475,18 +4501,18 @@ public class Workspace extends PagedView
         double pinch = Math.round(Math.log(newObjPosAndScale.getScale()) * ZOOM_LOG_BASE_INV);
         long delta = System.currentTimeMillis() - mLastMultitouch;
         if (pinch < 0 &&
-                mLauncher.mState == Launcher.State.WORKSPACE) {
-            disableScrollingIndicator();
-            mLauncher.showPreviewLayout(true);
+                mLauncher.mState == Launcher.State.WORKSPACE &&
+                delta >= MIN_MULTITOUCH_EVENT_INTERVAL) {
+            performGestureAction(mPinchGestureAction);
+            mLastMultitouch = System.currentTimeMillis();
+            mMultitouchGestureDetected = true;
             return true;
         } else if (pinch > 0 &&
                 mLauncher.mState == Launcher.State.WORKSPACE &&
                 delta >= MIN_MULTITOUCH_EVENT_INTERVAL) {
-            Intent preferences = new Intent().setClass(mLauncher, Preferences.class);
-            preferences.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP
-                    | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-            mLauncher.startActivity(preferences);
+            performGestureAction(mSpreadGestureAction);
             mLastMultitouch = System.currentTimeMillis();
+            mMultitouchGestureDetected = true;
             return true;
         }
         return false;
@@ -4626,6 +4652,30 @@ public class Workspace extends PagedView
                                 itemInfo.screen + 1, itemInfo.cellX, itemInfo.cellY);
                 }
             }
+        }
+    }
+
+    private void expandeStatusBar() {
+        StatusBarManager sbm = (StatusBarManager)mLauncher.getSystemService(Context.STATUS_BAR_SERVICE);
+        sbm.expandNotificationsPanel();
+    }
+
+    private void performGestureAction(String gestureAction) {
+        if (gestureAction.equals("expand_status_bar"))
+            expandeStatusBar();
+        else if (gestureAction.equals("default_homescreen"))
+            setCurrentPage(mDefaultHomescreen);
+        else if (gestureAction.equals("open_app_drawer"))
+            mLauncher.showAllApps(true);
+        else if (gestureAction.equals("show_previews")) {
+            disableScrollingIndicator();
+            mLauncher.showPreviewLayout(true);
+        }
+        else if (gestureAction.equals("show_settings")) {
+            Intent preferences = new Intent().setClass(mLauncher, Preferences.class);
+            preferences.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP
+                    | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+            mLauncher.startActivity(preferences);
         }
     }
 }
