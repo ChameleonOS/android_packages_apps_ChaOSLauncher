@@ -156,6 +156,21 @@ public final class PreferencesProvider {
                     return Integer.parseInt(getString("ui_homescreen_folder_style", "0"));
                 }
             }
+
+            public static class Gestures {
+                public static String getUpGestureAction() {
+                    return getString("ui_homescreen_up_gesture", "nothing");
+                }
+                public static String getDownGestureAction() {
+                    return getString("ui_homescreen_down_gesture", "nothing");
+                }
+                public static String getPinchGestureAction() {
+                    return getString("ui_homescreen_pinch_gesture", "nothing");
+                }
+                public static String getSpreadGestureAction() {
+                    return getString("ui_homescreen_spread_gesture", "nothing");
+                }
+            }
         }
 
         public static class Drawer {

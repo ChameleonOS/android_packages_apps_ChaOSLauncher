@@ -338,6 +338,12 @@ s -->
     <string name="preferences_interface_homescreen_folder_style_category">Folder icon style</string>
     <string name="preferences_interface_homescreen_folder_style_title">Style</string>
     <string name="preferences_interface_homescreen_folder_style_summary">Icon style for folders</string>
+    <string name="preferences_interface_homescreen_gestures_title">Gestures</string>
+    <string name="preferences_interface_homescreen_gestures_summary">Assign actions to homescreen gestures</string>
+    <string name="preferences_interface_homescreen_gestures_up_gesture_title">Swipe up</string>
+    <string name="preferences_interface_homescreen_gestures_down_gesture_title">Swipe down</string>
+    <string name="preferences_interface_homescreen_gestures_pinch_gesture_title">Pinch</string>
+    <string name="preferences_interface_homescreen_gestures_spread_gesture_title">Spread</string>
 
     <!-- Drawer -->
     <string name="preferences_interface_drawer_title">Drawer</string>
