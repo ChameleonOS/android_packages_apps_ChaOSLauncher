@@ -1051,7 +1051,8 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
 
             d.deferDragViewCleanupPostAnimation = false;
         }
-        cleanupWidgetPreloading(success);
+        // should pass false to cleanupWidgetPreloading if drop target is an instance of DeleteDropTarget
+        cleanupWidgetPreloading(success && !(target instanceof DeleteDropTarget));
         mDraggingWidget = false;
     }
 
