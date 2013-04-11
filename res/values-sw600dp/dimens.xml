@@ -80,6 +80,6 @@
 <!-- Preview cell size -->
     <dimen name="preview_cell_width_port">180dip</dimen>
     <dimen name="preview_cell_height_port">275dip</dimen>
-    <dimen name="preview_cell_width_land">275dip</dimen>
-    <dimen name="preview_cell_height_land">175dip</dimen>
+    <dimen name="preview_cell_width_land">270dip</dimen>
+    <dimen name="preview_cell_height_land">150dip</dimen>
 </resources>
