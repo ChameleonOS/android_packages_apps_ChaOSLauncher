@@ -133,6 +133,7 @@ public class PreviewLayout extends FrameLayout
         ((ImageView)layout.findViewById(R.id.delete_button)).setVisibility(View.GONE);
         ((ImageView)layout.findViewById(R.id.home_button)).setVisibility(View.GONE);
         ImageView image = (ImageView)layout.findViewById(R.id.preview_screen);
+        image.setScaleType(ImageView.ScaleType.CENTER);
         image.setOnClickListener(this);
         image.setImageResource(R.drawable.preview_new_screen);
         mContent.addViewToCellLayout(layout, -1, 0, params, true);
@@ -171,7 +172,6 @@ public class PreviewLayout extends FrameLayout
             image.setOnLongClickListener(this);
 
             image = (ImageView)layout.findViewById(R.id.home_button);
-            image.setScaleType(ImageView.ScaleType.FIT_XY);
             image.setOnClickListener(this);
             if (isDefault)
                 image.setSelected(true);
