@@ -2346,7 +2346,6 @@ public class LauncherModel extends BroadcastReceiver {
             needSave = true;
         }
         if (needSave) {
-            Log.d(TAG, "going to save icon bitmap for info=" + info);
             // This is slower than is ideal, but this only happens once
             // or when the app is updated with a new icon.
             updateItemInDatabase(context, info);
