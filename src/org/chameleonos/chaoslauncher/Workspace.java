@@ -570,6 +570,7 @@ public class Workspace extends PagedView
             screen.setChildrenScale(iconScale);
             if (mStretchScreens) {
                 screen.setCellGaps(-1, -1);
+                screen.setPadding(0, 0, 0, 0);
             }
             addView(screen);
         }
