@@ -221,6 +221,15 @@
     <string name="preferences_interface_homescreen_indicator_fade_summary">Indikator nach Seitenwechsel ausblenden</string>
     <string name="preferences_interface_homescreen_indicator_position_title">Position</string>
     <string name="preferences_interface_homescreen_indicator_position_summary">Anzeigeposition des Indikators auswählen</string>
+    <string name="preferences_interface_homescreen_folder_style_category">Ordner Aussehen</string>
+    <string name="preferences_interface_homescreen_folder_style_title">Aussehen</string>
+    <string name="preferences_interface_homescreen_folder_style_summary">Aussehen des Ordner Icons</string>
+    <string name="preferences_interface_homescreen_gestures_title">Gesten</string>
+    <string name="preferences_interface_homescreen_gestures_summary">Setze Homescreen Gesten</string>
+    <string name="preferences_interface_homescreen_gestures_up_gesture_title">Nach oben wischen</string>
+    <string name="preferences_interface_homescreen_gestures_down_gesture_title">Nach unten wischen</string>
+    <string name="preferences_interface_homescreen_gestures_pinch_gesture_title">Drücken</string>
+    <string name="preferences_interface_homescreen_gestures_spread_gesture_title">Spreizen</string>
 
     <!-- Drawer -->
     <string name="preferences_interface_drawer_title">Apps</string>
@@ -266,4 +275,12 @@
     <string name="preferences_interface_general_orientation_title">Automatische Seitenausrichtung</string>
     <string name="preferences_interface_general_fullscreen_title">Vollbildmodus</string>
     <string name="preferences_interface_general_fullscreen_summary">Statusleiste für Vollbildansicht ausblenden</string>
+    <string name="preferences_interface_general_icon_scale_title">Icongröße</string>
+    <string name="preferences_interface_general_icon_scale_summary">Größe der Icons im Homescreen und App-Drawer</string>
+
+    <!-- Folder sort types -->
+    <string name="menu_folder_sort_none">Keine</string>
+    <string name="menu_folder_sort_ascending">A->Z</string>
+    <string name="menu_folder_sort_descending">Z->A</string>
+    <string name="menu_folder_sort_usage">Sortieren nach Nutzung</string>
 </resources>
