@@ -65,6 +65,33 @@
 
     <string-array name="preferences_interface_drawer_orientation_entries">
         <item>Horizontal</item>
-        <item>Vertikal</item>
+        <item>Vertical</item>
+    </string-array>
+    <string-array name="preferences_interface_drawer_orientation_values" translatable="false">
+        <item>horizontal</item>
+        <item>vertikal</item>
+    </string-array>
+
+    <!-- Folder icon options -->
+    <string-array name="folder_icon_style_names">
+        <item>Gestapelt</item>
+        <item>Raster</item>
+        <item>Karrusell</item>
+    </string-array>
+
+    <!-- Icon Size -->
+    <string-array name="icon_size_names">
+        <item>Klein</item>
+        <item>Normal</item>
+        <item>Groß</item>
+    </string-array>
+
+    <string-array name="gesture_target_names">
+        <item>Keine Aktion</item>
+        <item>Erweitere Benachrichtigungsliste</item>
+        <item>Zurück zum Homescreen</item>
+        <item>Öffne App Drawer</item>
+        <item>Zeige Vorschau</item>
+        <item>Öffne Launcher Einstellungen</item>
     </string-array>
 </resources>
