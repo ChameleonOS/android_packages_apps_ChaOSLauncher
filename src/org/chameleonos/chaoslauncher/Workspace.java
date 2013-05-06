@@ -4777,7 +4777,7 @@ public class Workspace extends PagedView
 
     public void removeScreen(int index) {
         if (index < getChildCount()) {
-            if (getChildCount() <= 2)
+            if (getChildCount() <= 1)
                 return;
             ViewGroup cl = (ViewGroup)getChildAt(index);
             if (((cl instanceof CellLayout)) && (((CellLayout)cl).getShortcutsAndWidgets().getChildCount() == 0)) {
@@ -4794,7 +4794,7 @@ public class Workspace extends PagedView
         if (index < mDefaultHomescreen)
             mDefaultHomescreen--;
         if (mDefaultHomescreen >= getPageCount()) {
-            if (getPageCount() <= 0)
+            if (getPageCount() <= 1)
                 mDefaultHomescreen = 0;
             else
                 mDefaultHomescreen = getPageCount() - 1;
@@ -4806,7 +4806,7 @@ public class Workspace extends PagedView
         if (index < mCurrentPage)
             mCurrentPage--;
         if (mCurrentPage >= getPageCount())
-            if (getPageCount() <= 0)
+            if (getPageCount() <= 1)
                 mCurrentPage = 0;
             else
                 mCurrentPage = getPageCount() - 1;
