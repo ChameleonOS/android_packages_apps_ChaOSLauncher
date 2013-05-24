@@ -38,7 +38,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
-public class Preferences extends PreferenceActivity
+public class Preferences extends PreferenceDrawerActivity
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = "ChaOSLauncher.Preferences";
