@@ -38,7 +38,7 @@
         launcher:y="0" />
     <favorite
         launcher:packageName="com.android.mms"
-        launcher:className="com.android.mms.ui.ConversationList"
+        launcher:className="com.android.mms.ui.MmsActivity"
         launcher:container="-101"
         launcher:screen="0"
         launcher:x="3"
