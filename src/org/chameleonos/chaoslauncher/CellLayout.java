@@ -621,6 +621,7 @@ public class CellLayout extends ViewGroup {
 
             Resources res = getResources();
             bubbleChild.setTextColor(res.getColor(R.color.workspace_icon_text_color));
+            bubbleChild.setIconScale(getChildrenScale());
         }
 
         // Generate an id for each view, this assumes we have at most 256x256 cells
