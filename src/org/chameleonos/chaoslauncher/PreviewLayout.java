@@ -23,7 +23,6 @@ public class PreviewLayout extends FrameLayout
     private static final int REORDER_ANIMATION_DURATION = 150;
     private static final int MAX_SCREEN = 9;
     public static final String TAG = "PreviewLayout";
-    private Drawable mBackgroundDrawable;
     private int mCellCountX;
     private int mCellCountY;
     private CellLayout mContent;
@@ -31,8 +30,7 @@ public class PreviewLayout extends FrameLayout
     private DragController mDragController;
     private Launcher mLauncher;
     private Workspace mWorkspace;
-    private float mTransitionProgress = 0f;
-    private boolean mIsSwitchingState = false;
+    private boolean mIsSwitchingState;
     private int[] mTargetCell = new int[2];
     private int[] mPreviousTargetCell = new int[2];
     private int[] mEmptyCell = new int[2];
@@ -96,7 +94,7 @@ public class PreviewLayout extends FrameLayout
      * @param index
      */
     private void snapToScreen(int index) {
-        mWorkspace.setCurrentPage(index);
+        mWorkspace.snapToScreen(index);
         mLauncher.showWorkspace(true);
     }
 
@@ -214,11 +212,9 @@ public class PreviewLayout extends FrameLayout
         return mContent.getChildAt(index % 3, index / 3);
     }
 
-    public void loadBackgroundResource() {
-        mBackgroundDrawable = getContext().getResources().getDrawable(R.drawable.preview_bg);
-    }
-
     public void onClick(View v) {
+        if (mIsSwitchingState)
+            return;
         View view = null;
         if (!(v instanceof RelativeLayout))
             view = (View)v.getParent();
@@ -235,7 +231,7 @@ public class PreviewLayout extends FrameLayout
                 break;
             case R.id.preview_screen:
                 int j = mWorkspace.getPageCount();
-                if (j < 9 && (int)i.id == j) {
+                if (j < MAX_SCREEN && (int)i.id == j) {
                     Log.v(TAG, "add new screen");
                     addScreen((int)i.id);
                 } else
@@ -243,7 +239,7 @@ public class PreviewLayout extends FrameLayout
                 break;
             default:
                 j = mLauncher.getWorkspace().getPageCount();
-                if ((j < 9) && ((int)i.id == j)) {
+                if ((j < MAX_SCREEN) && ((int)i.id == j)) {
                     Log.v(TAG, "add new screen");
                     addScreen((int)i.id);
                 }
@@ -307,7 +303,6 @@ public class PreviewLayout extends FrameLayout
     public void snapDrawingCacheToImageViews() {
         removeAllViews();
         int cellLayoutCount = mWorkspace.getPageCount();
-        loadBackgroundResource();
         for (int j = 0; j < cellLayoutCount; j++) {
             // if a CellLayout has children then grab a preview using
             // getDrawingCache()
@@ -356,12 +351,10 @@ public class PreviewLayout extends FrameLayout
 
     @Override
     public void onLauncherTransitionStep(Launcher l, float t) {
-        mTransitionProgress = t;
     }
 
     @Override
     public void onLauncherTransitionEnd(Launcher l, boolean animated, boolean toWorkspace) {
-        mIsSwitchingState = false;
         if (toWorkspace) {
             mContent.setVisibility(View.INVISIBLE);
         } else {
@@ -370,6 +363,7 @@ public class PreviewLayout extends FrameLayout
             l.dismissWorkspaceCling(null);
             mWorkspace.setVisibility(View.INVISIBLE);
         }
+        mIsSwitchingState = false;
     }
 
     @Override
