@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2008 The Android Open Source Project
+ * Copyright (C) 2013 The ChameleonOS Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,6 +35,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -52,6 +54,7 @@ public class FolderIcon extends LinearLayout implements FolderListener {
     private Launcher mLauncher;
     private Folder mFolder;
     private FolderInfo mInfo;
+    private TextView mNotificationCountView;
     private static boolean sStaticValuesDirty = true;
 
     private CheckLongPressHelper mLongPressHelper;
@@ -138,6 +141,7 @@ public class FolderIcon extends LinearLayout implements FolderListener {
         icon.mFolderName = (BubbleTextView) icon.findViewById(R.id.folder_icon_name);
         icon.mFolderName.setText(folderInfo.title);
         icon.mPreviewBackground = (ImageView) icon.findViewById(R.id.preview_background);
+        icon.mNotificationCountView = (TextView) icon.findViewById(R.id.notification_count);
 
         icon.setTag(folderInfo);
         icon.setOnClickListener(launcher);
@@ -150,6 +154,7 @@ public class FolderIcon extends LinearLayout implements FolderListener {
         folder.setFolderIcon(icon);
         folder.bind(folderInfo);
         icon.mFolder = folder;
+        icon.setNotificationCount(icon.mInfo.mNotificationCount);
 
         icon.mFolderRingAnimator = new FolderRingAnimator(launcher, icon);
         folderInfo.addListener(icon);
@@ -324,7 +329,11 @@ public class FolderIcon extends LinearLayout implements FolderListener {
             float scaleRelativeToDragLayer, Runnable postAnimationRunnable) {
 
         // These correspond two the drawable and view that the icon was dropped _onto_
-        Drawable animateDrawable = ((TextView) destView).getCompoundDrawables()[1];
+        Drawable animateDrawable = null;
+        if (destView instanceof AppIconView)
+            animateDrawable = ((AppIconView) destView).getBubbleTextView().getCompoundDrawables()[1];
+        else
+            animateDrawable = ((TextView) destView).getCompoundDrawables()[1];
         computePreviewDrawingParams(animateDrawable.getIntrinsicWidth(),
                 destView.getMeasuredWidth());
 
@@ -338,8 +347,12 @@ public class FolderIcon extends LinearLayout implements FolderListener {
     }
 
     public void performDestroyAnimation(final View finalView, Runnable onCompleteRunnable) {
-        Drawable animateDrawable = ((TextView) finalView).getCompoundDrawables()[1];
-        computePreviewDrawingParams(animateDrawable.getIntrinsicWidth(), 
+        Drawable animateDrawable = null;
+        if (finalView instanceof AppIconView)
+            animateDrawable = ((AppIconView) finalView).getBubbleTextView().getCompoundDrawables()[1];
+        else
+            animateDrawable = ((TextView) finalView).getCompoundDrawables()[1];
+        computePreviewDrawingParams(animateDrawable.getIntrinsicWidth(),
                 finalView.getMeasuredWidth());
 
         // This will animate the first item from it's position as an icon into its
@@ -621,6 +634,10 @@ public class FolderIcon extends LinearLayout implements FolderListener {
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
+        // we want the notification count drawn on top of everything else
+        // so we'll set the visibility to GONE while we call super.dispatchDraw()
+        int notificationVisibility = mNotificationCountView.getVisibility();
+        mNotificationCountView.setVisibility(View.GONE);
         super.dispatchDraw(canvas);
 
         if (mFolder == null) return;
@@ -634,7 +651,7 @@ public class FolderIcon extends LinearLayout implements FolderListener {
         if (mAnimating) {
             computePreviewDrawingParams(mAnimParams.drawable);
         } else {
-            v = (TextView) items.get(0);
+            v = (TextView) ((AppIconView)items.get(0)).getBubbleTextView();
             d = v.getCompoundDrawables()[1];
             computePreviewDrawingParams(d);
         }
@@ -642,7 +659,7 @@ public class FolderIcon extends LinearLayout implements FolderListener {
         int nItemsInPreview = Math.min(items.size(), mNumItemsInPreview);
         if (!mAnimating) {
             for (int i = nItemsInPreview - 1; i >= 0; i--) {
-                v = (TextView) items.get(i);
+                v = (TextView) ((AppIconView)items.get(i)).getBubbleTextView();
                 if (!mHiddenItems.contains(v.getTag())) {
                     d = v.getCompoundDrawables()[1];
                     mParams = computePreviewItemDrawingParams(i, mParams);
@@ -652,6 +669,13 @@ public class FolderIcon extends LinearLayout implements FolderListener {
             }
         } else {
             drawPreviewItem(canvas, mAnimParams);
+        }
+
+        // now we draw the notification count if it was visible at the start of
+        // this method.
+        mNotificationCountView.setVisibility(notificationVisibility);
+        if (notificationVisibility == View.VISIBLE) {
+            drawChild(canvas, mNotificationCountView, getDrawingTime());
         }
     }
 
@@ -753,5 +777,42 @@ public class FolderIcon extends LinearLayout implements FolderListener {
         super.cancelLongPress();
 
         mLongPressHelper.cancelLongPress();
+    }
+
+    public void setNotificationCount(int count, int id) {
+        Integer idCount = mInfo.mCounts.get(id);
+        if (idCount != null) {
+            mInfo.mNotificationCount -= idCount;
+            mInfo.mCounts.remove(id);
+        }
+
+        if (id == -1) {
+            mInfo.mCounts.clear();
+            mInfo.mNotificationCount = 0;
+        }
+
+        if (count > 0) {
+            mInfo.mNotificationCount += count;
+            mInfo.mCounts.put(id, new Integer(count));
+        }
+
+        if (mInfo.mCounts.size() <= 0)
+            mInfo.mNotificationCount = 0;
+
+        setNotificationCount(mInfo.mNotificationCount);
+    }
+
+    public void setNotificationCount(int count) {
+        if (count <= 0) {
+            mNotificationCountView.setVisibility(View.GONE);
+        } else {
+            mNotificationCountView.setText("" + count);
+            if (mNotificationCountView.getVisibility() == View.GONE) {
+                mNotificationCountView.setVisibility(View.VISIBLE);
+                mNotificationCountView.startAnimation(
+                        AnimationUtils.loadAnimation(getContext(), R.anim.notification_popup));
+            }
+        }
+        invalidate();
     }
 }

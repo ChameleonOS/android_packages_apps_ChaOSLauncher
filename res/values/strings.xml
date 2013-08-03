@@ -391,6 +391,8 @@ s -->
     <string name="preferences_interface_general_orientation_title">Auto-rotate screen</string>
     <string name="preferences_interface_general_fullscreen_title">Fullscreen mode</string>
     <string name="preferences_interface_general_fullscreen_summary">Hide the status bar to extend the homescreen</string>
+    <string name="preferences_interface_general_icon_notifications_title">Icon notifications</string>
+    <string name="preferences_interface_general_icon_notifications_summary">Display notification counts on application icons</string>
     <string name="preferences_interface_general_icon_scale_title">Icon scale</string>
     <string name="preferences_interface_general_icon_scale_summary">Scale of icons in homescreens and app drawer</string>
 

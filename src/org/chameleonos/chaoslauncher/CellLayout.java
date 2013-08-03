@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2008 The Android Open Source Project
+ * Copyright (C) 2013 The ChameleonOS Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +24,10 @@ import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.appwidget.AppWidgetHostView;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -124,7 +128,7 @@ public class CellLayout extends ViewGroup {
     private int mDragOutlineCurrent = 0;
     private final Paint mDragOutlinePaint = new Paint();
 
-    private BubbleTextView mPressedOrFocusedIcon;
+    private View mPressedOrFocusedIcon;
 
     private HashMap<CellLayout.LayoutParams, Animator> mReorderAnimators = new
             HashMap<CellLayout.LayoutParams, Animator>();
@@ -368,6 +372,14 @@ public class CellLayout extends ViewGroup {
                 icon.getBottom() + getPaddingTop() + padding);
     }
 
+    private void invalidateAppIconView(AppIconView icon) {
+        final int padding = icon.getPressedOrFocusedBackgroundPadding();
+        invalidate(icon.getLeft() + getPaddingLeft() - padding,
+                icon.getTop() + getPaddingTop() - padding,
+                icon.getRight() + getPaddingLeft() + padding,
+                icon.getBottom() + getPaddingTop() + padding);
+    }
+
     void setOverScrollAmount(float r, boolean left) {
         if (left && mOverScrollForegroundDrawable != mOverScrollLeft) {
             mOverScrollForegroundDrawable = mOverScrollLeft;
@@ -380,16 +392,22 @@ public class CellLayout extends ViewGroup {
         invalidate();
     }
 
-    void setPressedOrFocusedIcon(BubbleTextView icon) {
+    void setPressedOrFocusedIcon(View icon) {
         // We draw the pressed or focused BubbleTextView's background in CellLayout because it
         // requires an expanded clip rect (due to the glow's blur radius)
-        BubbleTextView oldIcon = mPressedOrFocusedIcon;
+        View oldIcon = mPressedOrFocusedIcon;
         mPressedOrFocusedIcon = icon;
         if (oldIcon != null) {
-            invalidateBubbleTextView(oldIcon);
+            if (oldIcon instanceof BubbleTextView)
+                invalidateBubbleTextView((BubbleTextView)oldIcon);
+            else if (oldIcon instanceof AppIconView)
+                invalidateAppIconView((AppIconView)oldIcon);
         }
         if (mPressedOrFocusedIcon != null) {
-            invalidateBubbleTextView(mPressedOrFocusedIcon);
+            if (mPressedOrFocusedIcon instanceof BubbleTextView)
+                invalidateBubbleTextView((BubbleTextView)mPressedOrFocusedIcon);
+            else if (mPressedOrFocusedIcon instanceof AppIconView)
+                invalidateAppIconView((AppIconView) mPressedOrFocusedIcon);
         }
     }
 
@@ -478,13 +496,26 @@ public class CellLayout extends ViewGroup {
         // We draw the pressed or focused BubbleTextView's background in CellLayout because it
         // requires an expanded clip rect (due to the glow's blur radius)
         if (mPressedOrFocusedIcon != null) {
-            final int padding = mPressedOrFocusedIcon.getPressedOrFocusedBackgroundPadding();
-            final Bitmap b = mPressedOrFocusedIcon.getPressedOrFocusedBackground();
-            if (b != null) {
-                canvas.drawBitmap(b,
-                        mPressedOrFocusedIcon.getLeft() + getPaddingLeft() - padding,
-                        mPressedOrFocusedIcon.getTop() + getPaddingTop() - padding,
+            if (mPressedOrFocusedIcon instanceof BubbleTextView) {
+                final BubbleTextView v = (BubbleTextView) mPressedOrFocusedIcon;
+                final int padding = v.getPressedOrFocusedBackgroundPadding();
+                final Bitmap b = v.getPressedOrFocusedBackground();
+                if (b != null) {
+                    canvas.drawBitmap(b,
+                        v.getLeft() + getPaddingLeft() - padding,
+                        v.getTop() + getPaddingTop() - padding,
                         null);
+                }
+            } else if (mPressedOrFocusedIcon instanceof AppIconView) {
+                final AppIconView v = (AppIconView) mPressedOrFocusedIcon;
+                final int padding = v.getPressedOrFocusedBackgroundPadding();
+                final Bitmap b = v.getPressedOrFocusedBackground();
+                if (b != null) {
+                    canvas.drawBitmap(b,
+                            v.getLeft() + getPaddingLeft() - padding,
+                            v.getTop() + getPaddingTop() - padding,
+                            null);
+                }
             }
         }
 
@@ -634,6 +665,12 @@ public class CellLayout extends ViewGroup {
             Resources res = getResources();
             bubbleChild.setTextColor(res.getColor(R.color.workspace_icon_text_color));
             bubbleChild.setIconScale(getChildrenScale());
+        } else if (child instanceof AppIconView) {
+            AppIconView appIconChild = (AppIconView) child;
+
+            Resources res = getResources();
+            appIconChild.setTextColor(res.getColor(R.color.workspace_icon_text_color));
+            appIconChild.setIconScale(getChildrenScale());
         }
 
         // Generate an id for each view, this assumes we have at most 256x256 cells
@@ -711,6 +748,14 @@ public class CellLayout extends ViewGroup {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         mCellInfo.screen = ((ViewGroup) getParent()).indexOfChild(this);
+        IntentFilter filter = new IntentFilter(NotificationListener.ACTION_NOTIFICATION_UPDATE);
+        getContext().registerReceiver(mNotificationReceiver, filter);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        getContext().unregisterReceiver(mNotificationReceiver);
     }
 
     public void setTagToCellInfoForPoint(int touchX, int touchY) {
@@ -3330,4 +3375,27 @@ out:            for (int i = x; i < x + spanX - 1 && x < xCount; i++) {
     public boolean lastDownOnOccupiedCell() {
         return mLastDownOnOccupiedCell;
     }
+
+    BroadcastReceiver mNotificationReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (NotificationListener.ACTION_NOTIFICATION_UPDATE.equals(action)) {
+                String packageName = intent.getStringExtra("packageName");
+                int count = intent.getIntExtra("count", 0);
+                int id = intent.getIntExtra("id", -1);
+                for (int i = 0; i < mShortcutsAndWidgets.getChildCount(); i++) {
+                    final View v = mShortcutsAndWidgets.getChildAt(i);
+                    if (v instanceof AppIconView) {
+                        final ShortcutInfo info = (ShortcutInfo) v.getTag();
+                        final AppIconView appIconView = (AppIconView) v;
+                        if (info.getPackageName().contains(packageName)) {
+                            appIconView.setNotificationCount(count, id);
+                        } else if (id == -1)
+                            appIconView.setNotificationCount(0, -1);
+                    }
+                }
+            }
+        }
+    };
 }

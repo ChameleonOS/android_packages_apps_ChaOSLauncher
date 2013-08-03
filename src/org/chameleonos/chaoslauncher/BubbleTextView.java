@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2008 The Android Open Source Project
+ * Copyright (C) 2013 The ChameleonOS Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -294,6 +295,12 @@ public class BubbleTextView extends TextView implements ShortcutInfo.ShortcutLis
             if (parent != null) {
                 CellLayout layout = (CellLayout) parent.getParent();
                 layout.setPressedOrFocusedIcon((mPressedOrFocusedBackground != null) ? this : null);
+            }
+        } else if (getParent() instanceof AppIconView) {
+            ShortcutAndWidgetContainer parent = (ShortcutAndWidgetContainer) getParent().getParent();
+            if (parent != null) {
+                CellLayout layout = (CellLayout) parent.getParent();
+                layout.setPressedOrFocusedIcon((mPressedOrFocusedBackground != null) ? (AppIconView)getParent() : null);
             }
         }
     }

@@ -21,12 +21,21 @@
     android:orientation="vertical"
     android:focusable="true"
     android:background="@drawable/focusable_view_bg">
-    <ImageView
-        android:id="@+id/preview_background"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="@dimen/folder_preview_size"
-        android:layout_height="@dimen/folder_preview_size"
-        android:src="@drawable/portal_ring_inner_holo"/>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+        <ImageView
+            android:id="@+id/preview_background"
+            android:layout_width="@dimen/folder_preview_size"
+            android:layout_height="@dimen/folder_preview_size"
+            android:src="@drawable/portal_ring_inner_holo"/>
+        <TextView
+            android:id="@+id/notification_count"
+            style="@style/IconNotification"
+            android:background="@drawable/app_icon_notify_background" />
+    </FrameLayout>
     <org.chameleonos.chaoslauncher.BubbleTextView
         android:id="@+id/folder_icon_name"
         style="@style/WorkspaceIcon.Landscape.Folder"/>

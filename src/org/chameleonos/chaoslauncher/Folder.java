@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2008 The Android Open Source Project
+ * Copyright (C) 2013 The ChameleonOS Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +21,10 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
@@ -50,7 +54,6 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.chameleonos.chaoslauncher.R;
 import org.chameleonos.chaoslauncher.FolderInfo.FolderListener;
 import org.chameleonos.chaoslauncher.preference.PreferencesProvider;
 
@@ -223,6 +226,17 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
                 showPopup(view);
             }
         });
+        IntentFilter filter = new IntentFilter(NotificationListener.ACTION_NOTIFICATION_UPDATE);
+        mContext.registerReceiver(mNotificationReceiver, filter);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        try {
+            mContext.unregisterReceiver(mNotificationReceiver);
+        } catch (Exception e) {
+        }
     }
 
     private void showPopup(View v) {
@@ -339,7 +353,10 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
 
             mLauncher.getWorkspace().onDragStartedWithItem(v);
             mLauncher.getWorkspace().beginDragShared(v, this);
-            mIconDrawable = ((TextView) v).getCompoundDrawables()[1];
+            if (v instanceof AppIconView)
+                mIconDrawable = ((AppIconView) v).getBubbleTextView().getCompoundDrawables()[1];
+            else
+                mIconDrawable = ((TextView) v).getCompoundDrawables()[1];
 
             mCurrentDragInfo = item;
             mEmptyCell[0] = item.cellX;
@@ -347,11 +364,28 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
             mCurrentDragView = v;
 
             mContent.removeView(mCurrentDragView);
+            removeItemNotificationCounts(item);
             mInfo.remove(mCurrentDragInfo);
+            mFolderIcon.invalidate();
             mDragInProgress = true;
             mItemAddedBackToSelfViaIcon = false;
         }
         return true;
+    }
+
+    private void removeItemNotificationCounts(ItemInfo item) {
+        for (int i = 0; i < item.mCounts.size(); i++) {
+            int id = item.mCounts.keyAt(i);
+            mFolderIcon.setNotificationCount(0, id);
+        }
+    }
+
+    private void addItemNotificationCounts(ItemInfo item) {
+        for (int i = 0; i < item.mCounts.size(); i++) {
+            int id = item.mCounts.keyAt(i);
+            int count = item.mCounts.valueAt(i);
+            mFolderIcon.setNotificationCount(count, id);
+        }
     }
 
     public boolean isEditingName() {
@@ -645,21 +679,22 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
     }
 
     protected boolean createAndAddShortcut(ShortcutInfo item) {
-        final BubbleTextView textView =
-            (BubbleTextView) mInflater.inflate(R.layout.application, this, false);
+        final AppIconView view =
+            (AppIconView) mInflater.inflate(R.layout.application, this, false);
 
         Bitmap b = item.getIcon(mIconCache);
         int width = (int)((float)b.getWidth() * mIconScale);
         int height = (int)((float)b.getHeight() * mIconScale);
         FastBitmapDrawable d = new FastBitmapDrawable(b);
         d.setBounds(new Rect(0, 0, width, height));
-        textView.setCompoundDrawables(null,
+        view.getBubbleTextView().setCompoundDrawables(null,
                 d, null, null);
-        textView.setText(item.title);
-        textView.setTag(item);
+        view.getBubbleTextView().setText(item.title);
+        view.setTag(item);
+        view.setNotificationCount(item.mNotificationCount);
 
-        textView.setOnClickListener(this);
-        textView.setOnLongClickListener(this);
+        view.setOnClickListener(this);
+        view.setOnLongClickListener(this);
 
         // We need to check here to verify that the given item's location isn't already occupied
         // by another item.
@@ -675,9 +710,10 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         CellLayout.LayoutParams lp =
             new CellLayout.LayoutParams(item.cellX, item.cellY, item.spanX, item.spanY);
         boolean insert = false;
-        textView.setOnKeyListener(new FolderKeyEventListener());
-        mContent.addViewToCellLayout(textView, insert ? 0 : -1, (int)item.id, lp, true);
+        view.setOnKeyListener(new FolderKeyEventListener());
+        mContent.addViewToCellLayout(view, insert ? 0 : -1, (int)item.id, lp, true);
         sortFolder();
+        addItemNotificationCounts(item);
         return true;
     }
 
@@ -1278,6 +1314,7 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
             mItemsInvalidated = true;
             setupContentDimensions(getItemCount());
             mSuppressOnAdd = true;
+            addItemNotificationCounts(item);
         }
         mInfo.add(item);
     }
@@ -1313,6 +1350,10 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         }
         if (getItemCount() <= 1) {
             replaceFolderWithFinalItem();
+        }
+        for (int i = 0; i < item.mCounts.size(); i++) {
+            int id = item.mCounts.keyAt(i);
+            mFolderIcon.setNotificationCount(0, id);
         }
     }
 
@@ -1367,4 +1408,29 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
             startEditingFolderName();
         }
     }
+
+    BroadcastReceiver mNotificationReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (NotificationListener.ACTION_NOTIFICATION_UPDATE.equals(action)) {
+                String packageName = intent.getStringExtra("packageName");
+                int count = intent.getIntExtra("count", 0);
+                int id = intent.getIntExtra("id", -1);
+                final ShortcutAndWidgetContainer shortuctsAndWidgets = mContent.getShortcutsAndWidgets();
+                for (int i = 0; i < shortuctsAndWidgets.getChildCount(); i++) {
+                    final View v = shortuctsAndWidgets.getChildAt(i);
+                    if (v instanceof AppIconView) {
+                        final ShortcutInfo info = (ShortcutInfo) v.getTag();
+                        final AppIconView appIconView = (AppIconView) v;
+                        if (info.getPackageName().contains(packageName)) {
+                            appIconView.setNotificationCount(count, id);
+                            mFolderIcon.setNotificationCount(count, id);
+                        } else if (id == -1)
+                            appIconView.setNotificationCount(0, -1);
+                    }
+                }
+            }
+        }
+    };
 }

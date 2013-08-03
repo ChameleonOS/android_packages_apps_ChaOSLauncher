@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2010 The Android Open Source Project
+ * Copyright (C) 2013 The ChameleonOS Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +18,10 @@
 package org.chameleonos.chaoslauncher;
 
 import android.appwidget.AppWidgetHostView;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -76,6 +80,19 @@ public class PagedViewCellLayout extends ViewGroup implements Page {
         mChildren.setGap(mWidthGap, mHeightGap);
 
         addView(mChildren);
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        IntentFilter filter = new IntentFilter(NotificationListener.ACTION_NOTIFICATION_UPDATE);
+        getContext().registerReceiver(mNotificationReceiver, filter);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        getContext().unregisterReceiver(mNotificationReceiver);
     }
 
     public int getCellWidth() {
@@ -494,6 +511,29 @@ public class PagedViewCellLayout extends ViewGroup implements Page {
                 this.cellHSpan + ", " + this.cellVSpan + ")";
         }
     }
+
+    BroadcastReceiver mNotificationReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (NotificationListener.ACTION_NOTIFICATION_UPDATE.equals(action)) {
+                String packageName = intent.getStringExtra("packageName");
+                int count = intent.getIntExtra("count", 0);
+                int id = intent.getIntExtra("id", -1);
+                for (int i = 0; i < mChildren.getChildCount(); i++) {
+                    final View v = mChildren.getChildAt(i);
+                    if (v instanceof PagedViewIcon) {
+                        final ApplicationInfo info = (ApplicationInfo) v.getTag();
+                        final PagedViewIcon appIconView = (PagedViewIcon) v;
+                        if (info.getPackageName().equals(packageName)) {
+                            appIconView.setNotificationCount(count, id);
+                        } else if (id == -1)
+                            appIconView.setNotificationCount(0, -1);
+                    }
+                }
+            }
+        }
+    };
 }
 
 interface Page {

@@ -14,7 +14,19 @@
      limitations under the License.
 -->
 
-<org.chameleonos.chaoslauncher.BubbleTextView xmlns:android="http://schemas.android.com/apk/res/android"
-   style="@style/WorkspaceIcon.Landscape"
-   android:focusable="true"
-   android:background="@drawable/focusable_view_bg" />
+<org.chameleonos.chaoslauncher.AppIconView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:focusable="true"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <org.chameleonos.chaoslauncher.BubbleTextView
+        android:id="@+id/icon"
+        style="@style/WorkspaceIcon.Landscape"
+        android:background="@drawable/focusable_view_bg" />
+
+    <TextView
+        android:id="@+id/notification_count"
+        style="@style/IconNotification"
+        android:background="@drawable/app_icon_notify_background" />
+
+</org.chameleonos.chaoslauncher.AppIconView>

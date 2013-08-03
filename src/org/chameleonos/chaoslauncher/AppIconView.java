@@ -1,5 +1,4 @@
 /*
- * Copyright (C) 2010 The Android Open Source Project
  * Copyright (C) 2013 The ChameleonOS Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,37 +24,19 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-/**
- * An icon on a PagedView, specifically for items in the launcher's paged view (with compound
- * drawables on the top).
- */
-public class PagedViewIcon extends FrameLayout {
-    /** A simple callback interface to allow a PagedViewIcon to notify when it has been pressed */
-    public static interface PressedCallback {
-        void iconPressed(PagedViewIcon icon);
-    }
-
-    @SuppressWarnings("unused")
-    private static final String TAG = "ChaOSLauncher.PagedViewIcon";
-    private static final float PRESS_ALPHA = 0.4f;
-
-    private PagedViewIcon.PressedCallback mPressedCallback;
-    private boolean mLockDrawableState = false;
-
-    private Bitmap mIcon;
-
+public class AppIconView extends FrameLayout {
     private BubbleTextView mBubbleTextView;
     private TextView mNotificationCountView;
 
-    public PagedViewIcon(Context context) {
+    public AppIconView(Context context) {
         this(context, null);
     }
 
-    public PagedViewIcon(Context context, AttributeSet attrs) {
+    public AppIconView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public PagedViewIcon(Context context, AttributeSet attrs, int defStyle) {
+    public AppIconView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
@@ -103,58 +84,48 @@ public class PagedViewIcon extends FrameLayout {
         }
     }
 
-    public void applyFromApplicationInfo(ApplicationInfo info, boolean scaleUp,
-            PagedViewIcon.PressedCallback cb) {
-        mIcon = info.iconBitmap;
-        mPressedCallback = cb;
-        mBubbleTextView.setCompoundDrawablesWithIntrinsicBounds(null, new FastBitmapDrawable(mIcon), null, null);
-        mBubbleTextView.setCompoundDrawablePadding(0);
-        mBubbleTextView.setText(info.title);
+    public BubbleTextView getBubbleTextView() {
+        return mBubbleTextView;
+    }
+
+    public void applyFromShortcutInfo(ShortcutInfo info, IconCache iconCache) {
+        mBubbleTextView.applyFromShortcutInfo(info, iconCache);
         setTag(info);
         setNotificationCount(info.mNotificationCount);
     }
 
-    public void applyFromApplicationInfo(ApplicationInfo info, float scale, boolean scaleUp,
-            PagedViewIcon.PressedCallback cb) {
-        mIcon = info.iconBitmap;
-        int width = (int)((float)mIcon.getWidth() * scale);
-        int height = (int)((float)mIcon.getHeight() * scale);
-        FastBitmapDrawable d = new FastBitmapDrawable(Bitmap.createScaledBitmap(mIcon,
-                width, height, true));
-        mPressedCallback = cb;
-        mBubbleTextView.setCompoundDrawablesWithIntrinsicBounds(null, d, null, null);
-        mBubbleTextView.setCompoundDrawablePadding(0);
-        mBubbleTextView.setText(info.title);
+    public void applyFromShortcutInfo(ShortcutInfo info, IconCache iconCache, float scale) {
+        mBubbleTextView.applyFromShortcutInfo(info, iconCache, scale);
         setTag(info);
         setNotificationCount(info.mNotificationCount);
     }
 
-    public void lockDrawableState() {
-        mLockDrawableState = true;
+    public void setTextVisible(boolean visible) {
+        mBubbleTextView.setTextVisible(visible);
     }
 
-    public void resetDrawableState() {
-        mLockDrawableState = false;
-        post(new Runnable() {
-            @Override
-            public void run() {
-                refreshDrawableState();
-            }
-        });
+    public void setStayPressed(boolean stayPressed) {
+        mBubbleTextView.setStayPressed(stayPressed);
     }
 
-    protected void drawableStateChanged() {
-        super.drawableStateChanged();
+    int getPressedOrFocusedBackgroundPadding() {
+        return mBubbleTextView.getPressedOrFocusedBackgroundPadding();
+    }
 
-        // We keep in the pressed state until resetDrawableState() is called to reset the press
-        // feedback
-        if (isPressed()) {
-            setAlpha(PRESS_ALPHA);
-            if (mPressedCallback != null) {
-                mPressedCallback.iconPressed(this);
-            }
-        } else if (!mLockDrawableState) {
-            setAlpha(1f);
-        }
+    Bitmap getPressedOrFocusedBackground() {
+        return mBubbleTextView.getPressedOrFocusedBackground();
+    }
+
+    void setTextColor(int color) {
+        mBubbleTextView.setTextColor(color);
+    }
+
+    public void setIconScale(float scale) {
+        mBubbleTextView.setIconScale(scale);
+    }
+
+    void clearPressedOrFocusedBackground() {
+        mBubbleTextView.clearPressedOrFocusedBackground();
     }
 }
+

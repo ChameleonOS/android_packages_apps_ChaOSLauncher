@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2011 The Android Open Source Project
+ * Copyright (C) 2013 The ChameleonOS Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -602,7 +603,7 @@ public class FocusHelper {
         int newI = i + delta;
         while (0 <= newI && newI < count) {
             View newV = views.get(newI);
-            if (newV instanceof BubbleTextView || newV instanceof FolderIcon) {
+            if (newV instanceof AppIconView || newV instanceof FolderIcon) {
                 return newV;
             }
             newI += delta;
@@ -642,7 +643,7 @@ public class FocusHelper {
                 CellLayout.LayoutParams tmpLp = (CellLayout.LayoutParams) newV.getLayoutParams();
                 boolean satisfiesRow = (lineDelta < 0) ? (tmpLp.cellY < row) : (tmpLp.cellY > row);
                 if (satisfiesRow &&
-                        (newV instanceof BubbleTextView || newV instanceof FolderIcon)) {
+                        (newV instanceof AppIconView || newV instanceof FolderIcon)) {
                     float tmpDistance = (float) Math.sqrt(Math.pow(tmpLp.cellX - lp.cellX, 2) +
                             Math.pow(tmpLp.cellY - lp.cellY, 2));
                     if (tmpDistance < closestDistance) {

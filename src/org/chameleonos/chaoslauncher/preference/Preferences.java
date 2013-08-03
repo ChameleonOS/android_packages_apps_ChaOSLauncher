@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2011 The CyanogenMod Project
+ * Copyright (C) 2013 The ChameleonOS Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +18,7 @@
 package org.chameleonos.chaoslauncher.preference;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 <<<<<<< HEAD
@@ -199,6 +201,15 @@ public class Preferences extends PreferenceDrawerActivity
             super.onCreate(savedInstanceState);
 
             addPreferencesFromResource(R.xml.preferences_general);
+            PreferenceScreen preferenceScreen = getPreferenceScreen();
+            preferenceScreen.findPreference("ui_general_icon_notifications").setOnPreferenceClickListener(
+                    new Preference.OnPreferenceClickListener() {
+                        @Override
+                        public boolean onPreferenceClick(Preference preference) {
+                            startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
+                            return true;
+                        }
+                    });
         }
     }
 

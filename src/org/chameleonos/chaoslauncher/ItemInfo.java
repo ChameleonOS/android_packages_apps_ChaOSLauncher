@@ -20,6 +20,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.Log;
+import android.util.SparseArray;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -114,7 +115,11 @@ class ItemInfo {
      */
     int[] dropPos = null;
 
+    int mNotificationCount;
+    SparseArray<Integer> mCounts;
+
     ItemInfo() {
+        mCounts = new SparseArray<Integer>();
     }
 
     ItemInfo(ItemInfo info) {
@@ -128,6 +133,8 @@ class ItemInfo {
         container = info.container;
         launchCount = info.launchCount;
         sortType = info.sortType;
+        mNotificationCount = info.mNotificationCount;
+        mCounts = info.mCounts;
         // tempdebug:
         LauncherModel.checkItemInfo(this);
     }

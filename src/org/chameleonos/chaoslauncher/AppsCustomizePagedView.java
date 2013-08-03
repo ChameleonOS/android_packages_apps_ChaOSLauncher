@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2011 The Android Open Source Project
+ * Copyright (C) 2013 The ChameleonOS Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1023,6 +1024,9 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
         }
         mDeferredPrepareLoadWidgetPreviewsTasks.clear();
         mForceDrawAllChildrenNextFrame = !toWorkspace;
+        // call startService on NotificationListener to force an update to be
+        // broadcast to the icons
+        mContext.startService(new Intent(mContext, NotificationListener.class));
     }
 
     @Override

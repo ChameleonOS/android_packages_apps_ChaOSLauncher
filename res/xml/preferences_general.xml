@@ -27,6 +27,9 @@
     <CheckBoxPreference android:key="ui_general_fullscreen"
         android:title="@string/preferences_interface_general_fullscreen_title"
         android:summary="@string/preferences_interface_general_fullscreen_summary" />
+    <Preference android:key="ui_general_icon_notifications"
+        android:title="@string/preferences_interface_general_icon_notifications_title"
+        android:summary="@string/preferences_interface_general_icon_notifications_summary" />
     <org.chameleonos.chaoslauncher.preference.SeekBarDialogPreference android:key="ui_general_icon_scale"
         android:title="@string/preferences_interface_general_icon_scale_title"
         android:summary="@string/preferences_interface_general_icon_scale_summary"

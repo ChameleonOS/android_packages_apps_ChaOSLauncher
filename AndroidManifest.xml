@@ -3,6 +3,7 @@
 /*
 **
 ** Copyright 2008, The Android Open Source Project
+** Copyright (C) 2013 The ChameleonOS Open Source Project
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -22,7 +23,7 @@
     package="org.chameleonos.chaoslauncher"
     android:versionName="@string/application_version">
 
-    <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="17" />
+    <uses-sdk android:minSdkVersion="18" android:targetSdkVersion="18" />
 
     <permission
         android:name="com.android.launcher.permission.PRELOAD_WORKSPACE"
@@ -179,5 +180,12 @@
 
         <meta-data android:name="android.nfc.disable_beam_default"
             android:value="true" />
+
+        <service android:name=".NotificationListener"
+                 android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
     </application>
 </manifest>
