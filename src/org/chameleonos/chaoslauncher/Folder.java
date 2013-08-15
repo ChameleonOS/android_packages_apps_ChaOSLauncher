@@ -1423,7 +1423,8 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
                     if (v instanceof AppIconView) {
                         final ShortcutInfo info = (ShortcutInfo) v.getTag();
                         final AppIconView appIconView = (AppIconView) v;
-                        if (info.getPackageName().contains(packageName)) {
+                        final String pkgName = info.getPackageName();
+                        if (pkgName.equals(packageName)) {
                             appIconView.setNotificationCount(count, id);
                             mFolderIcon.setNotificationCount(count, id);
                         } else if (id == -1)

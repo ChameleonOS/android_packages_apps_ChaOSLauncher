@@ -3389,7 +3389,8 @@ out:            for (int i = x; i < x + spanX - 1 && x < xCount; i++) {
                     if (v instanceof AppIconView) {
                         final ShortcutInfo info = (ShortcutInfo) v.getTag();
                         final AppIconView appIconView = (AppIconView) v;
-                        if (info.getPackageName().contains(packageName)) {
+                        final String pkgName = info.getPackageName();
+                        if (pkgName.equals(packageName)) {
                             appIconView.setNotificationCount(count, id);
                         } else if (id == -1)
                             appIconView.setNotificationCount(0, -1);
