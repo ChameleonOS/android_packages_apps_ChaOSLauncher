@@ -73,7 +73,7 @@ public final class PreferencesProvider {
                 editor.commit();
             }
             public static int getDefaultHomescreen(int def) {
-                return getInt("ui_homescreen_default_screen", def + 1) - 1;
+                return getInt("ui_homescreen_default_screen", def);
             }
             public static void setDefaultHomescreen(Context context, int def) {
                 final SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, 0);
