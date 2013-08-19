@@ -8,8 +8,8 @@ import android.content.Intent;
 import android.os.UserHandle;
 import android.util.Log;
 
-import org.cyanogenmod.support.ui.LiveFolder;
-import static org.cyanogenmod.support.ui.LiveFolder.Constants.*;
+import org.chameleonos.support.ui.LiveFolder;
+import static org.chameleonos.support.ui.LiveFolder.Constants.*;
 
 public class LiveFoldersReceiver extends BroadcastReceiver {
 

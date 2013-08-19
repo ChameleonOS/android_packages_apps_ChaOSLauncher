@@ -52,7 +52,7 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import org.cyanogenmod.support.ui.LiveFolder;
+import org.chameleonos.support.ui.LiveFolder;
 import org.chameleonos.chaoslauncher.DropTarget.DragObject;
 import org.chameleonos.chaoslauncher.preference.PreferencesProvider;
 
@@ -207,11 +207,8 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
 
     // Dimens
     private int mContentWidth;
-<<<<<<< HEAD
-=======
     private int mAppIconSize;
     private float mIconScale;
->>>>>>> Scale the icon bitmap associated with icons and not the entire view which included the text
     private int mMaxAppCellCountX, mMaxAppCellCountY;
     private int mWidgetCountX, mWidgetCountY;
     private int mWidgetWidthGap, mWidgetHeightGap;
@@ -343,13 +340,10 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
         }
 
         // Save the default widget preview background
-<<<<<<< HEAD
-=======
         mIconScale = (float) PreferencesProvider.Interface.General.getIconScale(
                 resources.getInteger(R.integer.app_icon_scale_percentage)) / 100f;
         mAppIconSize = (int)((float)resources.getDimensionPixelSize(R.dimen.app_icon_size) * mIconScale);
 
->>>>>>> Scale the icon bitmap associated with icons and not the entire view which included the text
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AppsCustomizePagedView, 0, 0);
         mMaxAppCellCountX = a.getInt(R.styleable.AppsCustomizePagedView_maxAppCellCountX, -1);
         mMaxAppCellCountY = a.getInt(R.styleable.AppsCustomizePagedView_maxAppCellCountY, -1);

@@ -46,7 +46,7 @@ import android.os.RemoteException;
 import android.os.SystemClock;
 import android.util.Log;
 
-import org.chameleonos.chaoslauncher.trebuchet.preference.PreferencesProvider;
+import org.chameleonos.chaoslauncher.preference.PreferencesProvider;
 
 import java.lang.ref.WeakReference;
 import java.net.URISyntaxException;
@@ -1355,15 +1355,12 @@ public class LauncherModel extends BroadcastReceiver {
                             (LauncherSettings.Favorites.SPANX);
                     final int spanYIndex = c.getColumnIndexOrThrow(
                             LauncherSettings.Favorites.SPANY);
-<<<<<<< HEAD
                     final int receiverPackageIndex = c.getColumnIndexOrThrow(
                             LauncherSettings.Favorites.RECEIVER_COMPONENT);
-=======
                     final int launchCountIndex = c.getColumnIndexOrThrow(
                             LauncherSettings.Favorites.LAUNCH_COUNT);
                     final int sortTypeIndex = c.getColumnIndexOrThrow(
                             LauncherSettings.Favorites.SORT_TYPE);
->>>>>>> Add per-folder sorting
 
                     ShortcutInfo info;
                     String intentDescription;

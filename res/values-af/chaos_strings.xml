@@ -14,13 +14,13 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="application_copyright">Kopiereg \u00A9 CyanogenMod 2013</string>
+    <string name="application_copyright">Kopiereg \u00A9 ChameleonOS 2013</string>
     <string name="menu">Kielys</string>
     <string name="cancel_target_label">Kanselleer</string>
     <string name="edit_target_label">Redigeer</string>
     <string name="menu_lock_workspace">Sluit tuisskerm</string>
     <string name="menu_unlock_workspace">Ontsluit tuisskerm</string>
-    <string name="menu_preferences">Trebuchet instellings</string>
+    <string name="menu_preferences">ChaOS Launcher instellings</string>
     <string name="menu_apps_sort_title">Naam</string>
     <string name="menu_apps_sort_install_date">Installeringsdatum</string>
     <string name="menu_apps_filter_system">Stelsel</string>

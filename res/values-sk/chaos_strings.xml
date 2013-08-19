@@ -14,13 +14,13 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="application_copyright">Autorské práva \u00A9 2013 The CyanogenMod Project</string>
+    <string name="application_copyright">Autorské práva \u00A9 2013 The ChameleonOS Project</string>
     <string name="menu">Ponuka</string>
     <string name="cancel_target_label">Zrušiť</string>
     <string name="edit_target_label">Upraviť</string>
     <string name="menu_lock_workspace">Uzamknúť domovskú obrazovku</string>
     <string name="menu_unlock_workspace">Odomknúť domovskú obrazovku</string>
-    <string name="menu_preferences">Nastavenia spúšťača Trebuchet</string>
+    <string name="menu_preferences">Nastavenia spúšťača ChaOS Launcher</string>
     <string name="menu_apps_sort_title">Názov</string>
     <string name="menu_apps_sort_install_date">Dátum inštalácie</string>
     <string name="menu_apps_filter_system">Systémové</string>

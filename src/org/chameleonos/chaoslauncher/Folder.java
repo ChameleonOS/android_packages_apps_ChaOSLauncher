@@ -124,13 +124,10 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
 
     private boolean mDestroyed;
 
-<<<<<<< HEAD
     // Empty folder filler
     private TextView mEmptyTitle;
     private int mEmptyTitleWidth, mEmptyTitleHeight;
-=======
     private float mIconScale = 1.0f;
->>>>>>> Scale the icon bitmap associated with icons and not the entire view which included the text
 
     /**
      * Used to inflate the Workspace from XML.
@@ -194,14 +191,10 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         // We find out how tall the text view wants to be (it is set to wrap_content), so that
         // we can allocate the appropriate amount of space for it.
         int measureSpec = MeasureSpec.UNSPECIFIED;
-<<<<<<< HEAD
         mFolderName.measure(measureSpec, measureSpec);
-        mFolderNameHeight = mFolderName.getMeasuredHeight();
-        mFolderNameWidth = mFolderName.getMeasuredWidth();
-=======
         mFolderFooter.measure(measureSpec, measureSpec);
         mFolderNameHeight = mFolderFooter.getMeasuredHeight();
->>>>>>> Add per-folder sorting
+        mFolderNameWidth = mFolderFooter.getMeasuredWidth();
 
         // We disable action mode for now since it messes up the view on phones
         mFolderName.setCustomSelectionActionModeCallback(mActionModeCallback);
@@ -1047,17 +1040,13 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
                 MeasureSpec.EXACTLY);
         mContent.measure(contentWidthSpec, contentHeightSpec);
 
-<<<<<<< HEAD
         if (mContent.getDesiredWidth() == 0) {
             width += Math.min(mEmptyTitleWidth, mFolderNameWidth);
             contentWidthSpec = MeasureSpec.makeMeasureSpec(
                     Math.min(mEmptyTitleWidth, mFolderNameWidth), MeasureSpec.EXACTLY);
         }
 
-        mFolderName.measure(contentWidthSpec,
-=======
         mFolderFooter.measure(contentWidthSpec,
->>>>>>> Add per-folder sorting
                 MeasureSpec.makeMeasureSpec(mFolderNameHeight, MeasureSpec.EXACTLY));
 
         mEmptyTitle.measure(contentWidthSpec,
@@ -1423,7 +1412,7 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
                     if (v instanceof AppIconView) {
                         final ShortcutInfo info = (ShortcutInfo) v.getTag();
                         final AppIconView appIconView = (AppIconView) v;
-                        final String pkgName = info.getPackageName();
+                        final String pkgName = info.getPackageName(info.intent);
                         if (pkgName.equals(packageName)) {
                             appIconView.setNotificationCount(count, id);
                             mFolderIcon.setNotificationCount(count, id);

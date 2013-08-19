@@ -15,7 +15,7 @@
 -->
 <org.chameleonos.chaoslauncher.Hotseat
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:launcher="http://schemas.android.com/apk/res/org.chameleonos.chaoslauncher.trebuchet"
+    xmlns:launcher="http://schemas.android.com/apk/res/org.chameleonos.chaoslauncher"
     launcher:pageSpacing="@dimen/workspace_page_spacing"
     launcher:cellCount="@integer/hotseat_cell_count"
     android:background="@drawable/hotseat_background_portrait" />

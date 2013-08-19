@@ -19,7 +19,7 @@
     <string name="edit_target_label">Rediger</string>
     <string name="menu_lock_workspace">Lås hjemmeskjerm</string>
     <string name="menu_unlock_workspace">Lås opp hjemmeskjerm</string>
-    <string name="menu_preferences">Trebuchet innstillinger</string>
+    <string name="menu_preferences">ChaOS Launcher innstillinger</string>
     <string name="menu_apps_sort_title">Navn</string>
     <string name="menu_apps_sort_install_date">Dato installert</string>
     <string name="menu_apps_filter_system">System</string>

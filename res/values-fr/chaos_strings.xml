@@ -14,7 +14,7 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="application_copyright">Copyright \u00A9 2013 The CyanogenMod Project</string>
+    <string name="application_copyright">Copyright \u00A9 2013 The ChameleonOS Project</string>
     <string name="menu">Menu</string>
     <string name="cancel_target_label">Annuler</string>
     <string name="edit_target_label">Éditer</string>
@@ -25,7 +25,7 @@
     <string name="menu_apps_filter_system">Système</string>
     <string name="menu_apps_filter_downloaded">Téléchargées</string>
     <string name="menu_hidden_apps_delete">Réinitialiser</string>
-    <string name="menu_preferences">Paramètres de Trebuchet</string>
+    <string name="menu_preferences">Paramètres de ChaOS Launcher</string>
     <string name="all_apps_sort_cling_title">Trier vos applications</string>
     <string name="all_apps_sort_cling_add_item">Appuyer de manière prolongée sur l\'onglet Application pour sélectionner la méthode de tri</string>
     <string name="hidden_apps_title">Applications masquées</string>

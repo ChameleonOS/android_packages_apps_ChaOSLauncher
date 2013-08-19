@@ -19,7 +19,7 @@
     <string name="menu_apps_sort_install_date">Dia de Instalação</string>
     <string name="all_apps_sort_cling_title">Ordenar seus aplicativos</string>
     <string name="all_apps_sort_cling_add_item">Toque &amp; segure a aba Aplicativos para selecionar o modo de ordenação</string>
-    <string name="menu_preferences">Configurações Trebuchet</string>
+    <string name="menu_preferences">Configurações ChaOS Launcher</string>
     <string name="preferences_title">Preferências</string>
     <string name="preferences_interface_title">Interface</string>
     <string name="preferences_application_title">Aplicação</string>
@@ -132,7 +132,7 @@
     <string name="preferences_interface_drawer_hidden_apps_shortcuts_summary">Remover atalhos dos aplicativos ocultos da área de trabalho</string>
     <string name="preferences_interface_drawer_hidden_apps_widgets_title">Aplicativos ocultos (widgets)</string>
     <string name="preferences_interface_drawer_hidden_apps_widgets_summary">Remover widgets dos aplicativos ocultos da área de trabalho</string>
-    <string name="application_copyright">Copyright \u00A9 2013 The CyanogenMod Project</string>
+    <string name="application_copyright">Copyright \u00A9 2013 The ChameleonOS Project</string>
     <string name="menu">Menu</string>
     <string name="folder_empty_contents_title">Nenhum item encontrado</string>
     <string name="live_folder_cling_title">Pastas dinâmicas</string>

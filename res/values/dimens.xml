@@ -78,12 +78,8 @@
     <dimen name="apps_customize_widget_cell_height_gap">8dp</dimen>
 
     <!-- height of the bottom row of controls -->
-<<<<<<< HEAD
     <dimen name="button_bar_height">62dip</dimen>
     <dimen name="button_bar_height_with_text">90dip</dimen>
-=======
-    <dimen name="button_bar_height">64dip</dimen>
->>>>>>> Adjust icon size to accomodate more space and allow for larger icons.
     <!-- Because portal animations go beyond the bounds of an icon, we need
          to make the dock layout slightly larger than the button_bar_height -->
     <dimen name="button_bar_height_top_padding">0dp</dimen>
@@ -179,8 +175,6 @@
 <!-- Preferences -->
     <dimen name="header_icon_width">28dp</dimen>
 
-<<<<<<< HEAD
-=======
 <!-- Preview cell size -->
     <dimen name="preview_cell_width_port">110dip</dimen>
     <dimen name="preview_cell_height_port">163dip</dimen>
@@ -190,5 +184,4 @@
     <dimen name="preview_gap_height_port">10dip</dimen>
     <dimen name="preview_gap_width_land">10dip</dimen>
     <dimen name="preview_gap_height_land">0dip</dimen>
->>>>>>> Add launcher previews
 </resources>

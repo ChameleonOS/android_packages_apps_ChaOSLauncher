@@ -21,14 +21,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-<<<<<<< HEAD
+import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
+import android.preference.PreferenceDrawerActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
-=======
-import android.preference.*;
->>>>>>> Add support for user defined gesture actions.
+import android.preference.PreferenceScreen;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.LayoutInflater;

@@ -62,7 +62,7 @@ public class LauncherProvider extends ContentProvider {
 
     private static final String DATABASE_NAME = "launcher.db";
 
-    private static final int DATABASE_VERSION = 15;
+    private static final int DATABASE_VERSION = 16;
 
     static final String AUTHORITY = "org.chameleonos.chaoslauncher.settings";
 
@@ -290,12 +290,9 @@ public class LauncherProvider extends ContentProvider {
                     "iconPackage TEXT," +
                     "iconResource TEXT," +
                     "icon BLOB," +
-<<<<<<< HEAD
-                    "receiverComponent TEXT" +
-=======
                     "launchCount INTEGER," +
                     "sortType INTEGER" +
->>>>>>> Add per-folder sorting
+                    "receiverComponent TEXT" +
                     ");");
 
             // Database was just created, so wipe any previous widgets
@@ -443,11 +440,6 @@ public class LauncherProvider extends ContentProvider {
                 version = 14;
             }
 
-<<<<<<< HEAD
-            if (oldVersion < 15) {
-                db.execSQL("ALTER TABLE favorites ADD receiverComponent TEXT;");
-                version = 15;
-=======
             if (version < 15) {
                 // upgrade 14 -> 15 added launchCount and sortType columns
                 db.beginTransaction();
@@ -465,7 +457,11 @@ public class LauncherProvider extends ContentProvider {
                 } finally {
                     db.endTransaction();
                 }
->>>>>>> Add per-folder sorting
+            }
+
+            if (oldVersion < 16) {
+                db.execSQL("ALTER TABLE favorites ADD receiverComponent TEXT;");
+                version = 16;
             }
 
             if (version != DATABASE_VERSION) {

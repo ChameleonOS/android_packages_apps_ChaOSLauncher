@@ -18,7 +18,7 @@
     <string name="edit_target_label">Изменить</string>
     <string name="menu_lock_workspace">Запретить изменение</string>
     <string name="menu_unlock_workspace">Разрешить изменение</string>
-    <string name="menu_preferences">Настройки Trebuchet</string>
+    <string name="menu_preferences">Настройки ChaOS Launcher</string>
     <string name="menu_apps_sort_title">По имени</string>
     <string name="menu_apps_sort_install_date">По дате установки</string>
     <string name="menu_apps_filter_system">Системные</string>

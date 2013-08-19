@@ -525,7 +525,7 @@ public class PagedViewCellLayout extends ViewGroup implements Page {
                     if (v instanceof PagedViewIcon) {
                         final ApplicationInfo info = (ApplicationInfo) v.getTag();
                         final PagedViewIcon appIconView = (PagedViewIcon) v;
-                        final String pkgName = info.getPackageName();
+                        final String pkgName = info.getPackageName(info.intent);
                         if (pkgName.equals(packageName)) {
                             appIconView.setNotificationCount(count, id);
                         } else if (id == -1)

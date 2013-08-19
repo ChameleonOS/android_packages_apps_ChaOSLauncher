@@ -25,7 +25,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import org.chameleonos.chaoslauncher.trebuchet.R;
+import org.chameleonos.chaoslauncher.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

@@ -546,13 +546,6 @@ public class FolderIcon extends LinearLayout implements FolderListener {
 
         // We want to imagine our coordinates from the bottom left, growing up and to the
         // right. This is natural for the x-axis, but for the y-axis, we have to invert things.
-<<<<<<< HEAD
-        float offsetScale = 0.6f;
-        int cellX = index % (mNumItemsInPreview / 2);
-        int cellY = index / (mNumItemsInPreview / 2);
-        float xOffset = (mAvailableSpaceInPreview - (offsetScale*mBaselineIconSize)) * cellX;
-        float yOffset = (mAvailableSpaceInPreview - (offsetScale*mBaselineIconSize)) * cellY;
-=======
         float totalCellSize = mAvailableSpaceInPreview / 2;
         float iconSize = mIntrinsicIconSize * iconScale;
         float cellOffset = (totalCellSize - iconSize) / 2f;
@@ -560,7 +553,6 @@ public class FolderIcon extends LinearLayout implements FolderListener {
         int cellY = index / (mNumItemsInPreview / 2);
         float xOffset = (totalCellSize * cellX) + cellOffset;
         float yOffset = (totalCellSize * cellY) + cellOffset + mPreviewOffsetY;
->>>>>>> Don't scale the icon bitmap for icon scaling.  Use the drawable bounds to define the location and size of the icon and have FastBitmapDrawable use these bounds when drawing the bitmap.  This allows the icon to be scaled and the scale changed without creating a scaled bitmap.
         float transX = xOffset;
         float transY = yOffset;
         final int overlayAlpha = 0;

@@ -120,7 +120,7 @@
     <string name="effects_carousel_right">Karuselli oikea</string>
     <string name="menu_lock_workspace">Lukitse kotinäyttö</string>
     <string name="menu_unlock_workspace">Poista kotinäytön lukitus</string>
-    <string name="menu_preferences">Trebuchetin asetukset</string>
+    <string name="menu_preferences">ChaOS Launcherin asetukset</string>
     <string name="all_apps_sort_cling_title">Järjestä sovellukset</string>
     <string name="all_apps_sort_cling_add_item">Pidä Sovellukset-välilehteä pohjassa valitaksesi järjestyksen</string>
     <string name="workspace_locked">Kotinäyttö on lukittu, poista lukitus asetuksista järjestääksesi uudelleen</string>

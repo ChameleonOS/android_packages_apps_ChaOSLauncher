@@ -14,13 +14,13 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="application_copyright">Copyright \u00A9 2013 The CyanogenMod Project</string>
+    <string name="application_copyright">Copyright \u00A9 ChameleonOS 2013</string>
     <string name="menu">Menu</string>
     <string name="cancel_target_label">Annuller</string>
     <string name="edit_target_label">Rediger</string>
     <string name="menu_lock_workspace">Lås startskærm</string>
     <string name="menu_unlock_workspace">Lås startskærm op</string>
-    <string name="menu_preferences">Trebuchet-indstillinger</string>
+    <string name="menu_preferences">ChaOS Launcher-indstillinger</string>
     <string name="menu_apps_sort_title">Navn</string>
     <string name="menu_apps_sort_install_date">Installationsdato</string>
     <string name="menu_apps_filter_system">System</string>

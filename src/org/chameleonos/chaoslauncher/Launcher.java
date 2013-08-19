@@ -103,7 +103,7 @@ import android.widget.Toast;
 
 import com.android.common.Search;
 
-import org.cyanogenmod.support.ui.LiveFolder;
+import org.chameleonos.support.ui.LiveFolder;
 
 import org.chameleonos.chaoslauncher.DropTarget.DragObject;
 import org.chameleonos.chaoslauncher.preference.*;
@@ -1171,21 +1171,12 @@ public final class Launcher extends Activity
      * @return A View inflated from layoutResId.
      */
     View createShortcut(int layoutResId, ViewGroup parent, ShortcutInfo info) {
-<<<<<<< HEAD
-        BubbleTextView favorite = (BubbleTextView) mInflater.inflate(layoutResId, parent, false);
-<<<<<<< HEAD
-        favorite.applyFromShortcutInfo(info, mIconCache);
-        favorite.setTextVisible(!mHideIconLabels);
-=======
-=======
         AppIconView favorite = (AppIconView) mInflater.inflate(layoutResId, parent, false);
->>>>>>> Add number of notifactions indicator to app and folder icons.
         float scale = info.container == LauncherSettings.Favorites.CONTAINER_HOTSEAT ? 1.0f : mIconScale;
         favorite.applyFromShortcutInfo(info, mIconCache, scale);
         if (mHideIconLabels) {
             favorite.setTextVisible(false);
         }
->>>>>>> Scale the icon bitmap associated with icons and not the entire view which included the text
         favorite.setOnClickListener(this);
         favorite.setOnTouchListener(this);
         return favorite;
@@ -1304,7 +1295,6 @@ public final class Launcher extends Activity
         info.mFolderInfo = null;
     }
 
-<<<<<<< HEAD
     private void completeLiveFolder(ComponentName receiver, long container, int screen, int cellX,
             int cellY, String title) {
         CellLayout layout = getCellLayout(container, screen);
@@ -1313,8 +1303,6 @@ public final class Launcher extends Activity
                 mPendingAddInfo.cellX, mPendingAddInfo.cellY, title);
     }
 
-=======
->>>>>>> Trebuchet: fix uninstall app from shortcut
     /**
      * Add a shortcut to the workspace.
      *
@@ -1979,7 +1967,6 @@ public final class Launcher extends Activity
         boolean allAppsVisible = (mAppsCustomizeTabHost.getVisibility() == View.VISIBLE);
         menu.setGroupVisible(MENU_GROUP_WALLPAPER, !allAppsVisible);
 
-<<<<<<< HEAD
         menu.findItem(MENU_LOCK_WORKSPACE).setTitle(!mLockWorkspace ? R.string.menu_lock_workspace : R.string.menu_unlock_workspace);
 
         Intent launcherIntent = new Intent(Intent.ACTION_MAIN);
@@ -1992,8 +1979,6 @@ public final class Launcher extends Activity
                 !defaultLauncher.packageName.equals(getClass().getPackage().getName());
         menu.findItem(MENU_PREFERENCES).setVisible(preferencesVisible);
 		
-=======
->>>>>>> Always show overflow menu and fix layout where market icon would overlap menu icon
 		// only show the previews option if on the workspace
 		boolean previewsVisible =  mState == State.WORKSPACE;
 		menu.findItem(MENU_PREVIEWS).setVisible(previewsVisible);
@@ -3736,7 +3721,6 @@ public final class Launcher extends Activity
 
     private void updateOverflowMenuButton() {
         final View overflowMenuButton = findViewById(R.id.overflow_menu_button);
-<<<<<<< HEAD
         Intent launcherIntent = new Intent(Intent.ACTION_MAIN);
         launcherIntent.addCategory(Intent.CATEGORY_HOME);
         launcherIntent.addCategory(Intent.CATEGORY_DEFAULT);
@@ -3749,9 +3733,6 @@ public final class Launcher extends Activity
         boolean disabled = ViewConfiguration.get(this).hasPermanentMenuKey() || !preferencesVisible;
         overflowMenuButton.setVisibility(disabled ? View.GONE : View.VISIBLE);
         overflowMenuButton.setEnabled(!disabled);
-=======
-        overflowMenuButton.setVisibility(View.VISIBLE);
->>>>>>> Always show overflow menu and fix layout where market icon would overlap menu icon
     }
 
     /**

@@ -14,13 +14,13 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="application_copyright">Copyright \u00A9 2013 CyanogenMod Projesi</string>
+    <string name="application_copyright">Copyright \u00A9 2013 ChameleonOS Projesi</string>
     <string name="menu">Menü</string>
     <string name="cancel_target_label">İptal</string>
     <string name="edit_target_label">Düzenle</string>
     <string name="menu_lock_workspace">Ana ekranı kilitle</string>
     <string name="menu_unlock_workspace">Ana ekran kilidini aç</string>
-    <string name="menu_preferences">Trebuchet ayarları</string>
+    <string name="menu_preferences">ChaOS Launcher ayarları</string>
     <string name="menu_apps_sort_title">İsim</string>
     <string name="menu_apps_sort_install_date">Yükleme tarihi</string>
     <string name="menu_apps_filter_system">Sistem</string>

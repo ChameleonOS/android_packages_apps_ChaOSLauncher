@@ -3,7 +3,7 @@ package org.chameleonos.chaoslauncher;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.cyanogenmod.support.ui.LiveFolder;
+import org.chameleonos.support.ui.LiveFolder;
 
 import android.content.ComponentName;
 import android.content.ContentValues;
