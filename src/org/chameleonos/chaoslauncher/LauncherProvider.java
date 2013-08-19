@@ -291,7 +291,7 @@ public class LauncherProvider extends ContentProvider {
                     "iconResource TEXT," +
                     "icon BLOB," +
                     "launchCount INTEGER," +
-                    "sortType INTEGER" +
+                    "sortType INTEGER," +
                     "receiverComponent TEXT" +
                     ");");
 
