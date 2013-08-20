@@ -86,7 +86,7 @@ public class PreviewLayout extends FrameLayout
         mWorkspace.setDefaultScreenTo(index);
         invalidate();
         PreferencesProvider.Interface.Homescreen.setDefaultHomescreen(getContext(),
-                index + 1);
+                index);
     }
 
     /**
