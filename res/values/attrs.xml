@@ -177,11 +177,10 @@
         <attr name="pickerTitle2" format="string" />
     </declare-styleable>
 
-    <declare-styleable name="SeekBarDialogPreference">
-        <attr name="max" />
+    <declare-styleable name="SeekBarPreference">
         <attr name="min" />
-        <attr name="prefix" format="string" />
-        <attr name="suffix" format="string" />
+        <attr name="unitsLeft" format="string" />
+        <attr name="unitsRight" format="string" />
     </declare-styleable>
 
     <declare-styleable name="EcoGallery">

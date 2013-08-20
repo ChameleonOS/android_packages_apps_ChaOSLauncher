@@ -30,10 +30,11 @@
     <Preference android:key="ui_general_icon_notifications"
         android:title="@string/preferences_interface_general_icon_notifications_title"
         android:summary="@string/preferences_interface_general_icon_notifications_summary" />
-    <org.chameleonos.chaoslauncher.preference.SeekBarDialogPreference android:key="ui_general_icon_scale"
+    <org.chameleonos.chaoslauncher.preference.SeekBarPreference android:key="ui_general_icon_scale"
         android:title="@string/preferences_interface_general_icon_scale_title"
         android:summary="@string/preferences_interface_general_icon_scale_summary"
         launcher:min="80"
         launcher:max="100"
+        launcher:unitsRight="%"
         android:defaultValue="@integer/app_icon_scale_percentage" />
 </PreferenceScreen>

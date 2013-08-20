@@ -49,11 +49,12 @@
         android:summary="@string/preferences_interface_dock_hide_icon_labels_summary"
         android:defaultValue="true" />
     <!-- android:dependency="ui_dock_enabled" /-->
-    <org.chameleonos.chaoslauncher.preference.SeekBarDialogPreference android:key="ui_dock_icon_scale"
+    <org.chameleonos.chaoslauncher.preference.SeekBarPreference android:key="ui_dock_icon_scale"
         android:title="@string/preferences_interface_dock_icon_scale_title"
         android:summary="@string/preferences_interface_dock_icon_scale_summary"
         launcher:min="80"
         launcher:max="100"
+        launcher:unitsRight="%"
         android:defaultValue="@integer/hotseat_item_scale_percentage" />
     <!-- android:dependency="ui_dock_enabled" /-->
     <CheckBoxPreference android:key="ui_dock_divider"
