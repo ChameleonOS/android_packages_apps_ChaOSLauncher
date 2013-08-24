@@ -4308,12 +4308,19 @@ public final class Launcher extends Activity
             break;
         }
 
+        // temporary fix for screen rotating when long pressing an item when
+        // in landscape orientation on the Kindle Fire HD
+        boolean reverseRotation = getResources().getBoolean(
+                com.android.internal.R.bool.config_reverseDefaultRotation);
         int[] oriMap = {
                 ActivityInfo.SCREEN_ORIENTATION_PORTRAIT,
-                ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE,
+                reverseRotation ? ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE :
+                        ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE,
                 ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT,
-                ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE
+                reverseRotation ? ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE :
+                        ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE,
         };
+
         // Since the map starts at portrait, we need to offset if this device's natural orientation
         // is landscape.
         int indexOffset = 0;
