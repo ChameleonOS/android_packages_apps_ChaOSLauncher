@@ -220,16 +220,6 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
             }
         });
         IntentFilter filter = new IntentFilter(NotificationListener.ACTION_NOTIFICATION_UPDATE);
-        mContext.registerReceiver(mNotificationReceiver, filter);
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        try {
-            mContext.unregisterReceiver(mNotificationReceiver);
-        } catch (Exception e) {
-        }
     }
 
     private void showPopup(View v) {
@@ -1398,29 +1388,20 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         }
     }
 
-    BroadcastReceiver mNotificationReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (NotificationListener.ACTION_NOTIFICATION_UPDATE.equals(action)) {
-                String packageName = intent.getStringExtra("packageName");
-                int count = intent.getIntExtra("count", 0);
-                int id = intent.getIntExtra("id", -1);
-                final ShortcutAndWidgetContainer shortuctsAndWidgets = mContent.getShortcutsAndWidgets();
-                for (int i = 0; i < shortuctsAndWidgets.getChildCount(); i++) {
-                    final View v = shortuctsAndWidgets.getChildAt(i);
-                    if (v instanceof AppIconView) {
-                        final ShortcutInfo info = (ShortcutInfo) v.getTag();
-                        final AppIconView appIconView = (AppIconView) v;
-                        final String pkgName = info.getPackageName(info.intent);
-                        if (pkgName.equals(packageName)) {
-                            appIconView.setNotificationCount(count, id);
-                            mFolderIcon.setNotificationCount(count, id);
-                        } else if (id == -1)
-                            appIconView.setNotificationCount(0, -1);
-                    }
-                }
+    public void handleNotification(String packageName, int id, int count) {
+        final ShortcutAndWidgetContainer shortuctsAndWidgets = mContent.getShortcutsAndWidgets();
+        for (int i = 0; i < shortuctsAndWidgets.getChildCount(); i++) {
+            final View v = shortuctsAndWidgets.getChildAt(i);
+            if (v instanceof AppIconView) {
+                final ShortcutInfo info = (ShortcutInfo) v.getTag();
+                final AppIconView appIconView = (AppIconView) v;
+                final String pkgName = info.getPackageName(info.intent);
+                if (pkgName.equals(packageName)) {
+                    appIconView.setNotificationCount(count, id);
+                    mFolderIcon.setNotificationCount(count, id);
+                } else if (id == -1)
+                    appIconView.setNotificationCount(0, -1);
             }
         }
-    };
+    }
 }

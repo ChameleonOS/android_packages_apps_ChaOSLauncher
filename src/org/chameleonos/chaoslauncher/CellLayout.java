@@ -3394,6 +3394,8 @@ out:            for (int i = x; i < x + spanX - 1 && x < xCount; i++) {
                             appIconView.setNotificationCount(count, id);
                         } else if (id == -1)
                             appIconView.setNotificationCount(0, -1);
+                    } else if (v instanceof FolderIcon) {
+                        ((FolderIcon)v).getFolder().handleNotification(packageName, id, count);
                     }
                 }
             }
