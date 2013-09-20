@@ -52,11 +52,12 @@
         android:gravity="center_horizontal"
         android:singleLine="true" />
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/folder_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
+        android:orientation="horizontal"
         android:background="#00000000" >
 
         <org.chameleonos.chaoslauncher.FolderEditText
@@ -64,6 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:gravity="center_horizontal"
             android:paddingTop="@dimen/folder_name_padding"
             android:paddingBottom="@dimen/folder_name_padding"
@@ -83,6 +85,6 @@
             android:layout_gravity="end"
             android:src="@android:drawable/ic_menu_sort_by_size" />
 
-    </FrameLayout>
+    </LinearLayout>
 
 </org.chameleonos.chaoslauncher.Folder>
