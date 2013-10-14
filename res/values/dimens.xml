@@ -31,7 +31,6 @@
     <!-- qsb_bar_height_inset represents qsb_bar_height minus the padding
          that we put on each page for allowing folders to draw out of bounds -->
     <dimen name="qsb_bar_height_inset">34dp</dimen>
-    <dimen name="qsb_bar_hidden_inset">14dp</dimen>
     <dimen name="qsb_bar_height">40dp</dimen>
     <dimen name="qsb_padding_left">0dp</dimen>
     <dimen name="qsb_padding_right">0dp</dimen>
@@ -79,7 +78,6 @@
 
     <!-- height of the bottom row of controls -->
     <dimen name="button_bar_height">62dip</dimen>
-    <dimen name="button_bar_height_with_text">90dip</dimen>
     <!-- Because portal animations go beyond the bounds of an icon, we need
          to make the dock layout slightly larger than the button_bar_height -->
     <dimen name="button_bar_height_top_padding">0dp</dimen>
@@ -87,14 +85,9 @@
     <dimen name="button_bar_width_left_padding">0dp</dimen>
     <dimen name="button_bar_width_right_padding">0dp</dimen>
     <dimen name="button_bar_height_plus_padding">62dp</dimen>
-    <dimen name="button_bar_height_plus_padding_with_text">90dp</dimen>
 
     <!-- Drag padding to add to the bottom of drop targets -->
     <dimen name="drop_target_drag_padding">14dp</dimen>
-
-    <!-- roughly a status bar (for vertically centering the all apps
-         home icon in landscape) -->
-    <dimen name="status_bar_height">25dip</dimen>
 
 <!-- Dragging -->
     <!-- the area at the edge of the screen that makes the workspace go left
@@ -150,17 +143,7 @@
     <dimen name="workspace_top_padding_port">@dimen/qsb_bar_height_inset</dimen>
     <dimen name="workspace_top_padding_land">0dp</dimen>
     <dimen name="workspace_bottom_padding_port">@dimen/button_bar_height</dimen>
-    <dimen name="workspace_bottom_padding_port_with_text">100dp</dimen>
     <dimen name="workspace_bottom_padding_land">0dp</dimen>
-
-    <dimen name="workspace_left_padding_port_qsb_hidden">0dp</dimen>
-    <dimen name="workspace_left_padding_land_qsb_hidden">0dp</dimen>
-    <dimen name="workspace_top_padding_port_qsb_hidden">0dp</dimen>
-    <dimen name="workspace_top_padding_land_qsb_hidden">0dp</dimen>
-    <dimen name="workspace_right_padding_port_hotseat_hidden">0dp</dimen>
-    <dimen name="workspace_right_padding_land_hotseat_hidden">0dp</dimen>
-    <dimen name="workspace_bottom_padding_port_hotseat_hidden">0dp</dimen>
-    <dimen name="workspace_bottom_padding_land_hotseat_hidden">0dp</dimen>
 
 <!-- Workspace cell size -->
     <dimen name="workspace_cell_width_land">106dp</dimen>
@@ -171,17 +154,4 @@
     <dimen name="workspace_width_gap_port">0dp</dimen>
     <dimen name="workspace_height_gap_land">0dp</dimen>
     <dimen name="workspace_height_gap_port">0dp</dimen>
-
-<!-- Preferences -->
-    <dimen name="header_icon_width">28dp</dimen>
-
-<!-- Preview cell size -->
-    <dimen name="preview_cell_width_port">110dip</dimen>
-    <dimen name="preview_cell_height_port">163dip</dimen>
-    <dimen name="preview_cell_width_land">163dip</dimen>
-    <dimen name="preview_cell_height_land">110dip</dimen>
-    <dimen name="preview_gap_width_port">10dip</dimen>
-    <dimen name="preview_gap_height_port">10dip</dimen>
-    <dimen name="preview_gap_width_land">10dip</dimen>
-    <dimen name="preview_gap_height_land">0dip</dimen>
 </resources>

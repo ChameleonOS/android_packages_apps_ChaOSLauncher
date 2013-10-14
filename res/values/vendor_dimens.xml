@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2013 The CyanogenMod Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <dimen name="qsb_bar_hidden_inset">14dp</dimen>
+    <dimen name="button_bar_height_with_text">90dip</dimen>
+    <dimen name="button_bar_height_plus_padding_with_text">90dp</dimen>
+
+    <!-- roughly a status bar (for vertically centering the all apps
+         home icon in landscape) -->
+    <dimen name="status_bar_height">25dip</dimen>
+
+    <dimen name="workspace_bottom_padding_port_with_text">100dp</dimen>
+    <dimen name="workspace_left_padding_port_qsb_hidden">0dp</dimen>
+    <dimen name="workspace_left_padding_land_qsb_hidden">0dp</dimen>
+    <dimen name="workspace_top_padding_port_qsb_hidden">0dp</dimen>
+    <dimen name="workspace_top_padding_land_qsb_hidden">0dp</dimen>
+    <dimen name="workspace_right_padding_port_hotseat_hidden">0dp</dimen>
+    <dimen name="workspace_right_padding_land_hotseat_hidden">0dp</dimen>
+    <dimen name="workspace_bottom_padding_port_hotseat_hidden">0dp</dimen>
+    <dimen name="workspace_bottom_padding_land_hotseat_hidden">0dp</dimen>
+
+    <!-- Preferences -->
+    <dimen name="header_icon_width">28dp</dimen>
+
+    <!-- Preview cell size -->
+    <dimen name="preview_cell_width_port">110dip</dimen>
+    <dimen name="preview_cell_height_port">163dip</dimen>
+    <dimen name="preview_cell_width_land">163dip</dimen>
+    <dimen name="preview_cell_height_land">110dip</dimen>
+    <dimen name="preview_gap_width_port">10dip</dimen>
+    <dimen name="preview_gap_height_port">10dip</dimen>
+    <dimen name="preview_gap_width_land">10dip</dimen>
+    <dimen name="preview_gap_height_land">0dip</dimen>
+
+</resources>
